@@ -70,6 +70,43 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
     }
   };
 
+  const handleSendReminder = async () => {
+    if (!referral.patientPhone || !referral.appointmentDate) {
+      toast.error('Phone number and appointment date are required');
+      return;
+    }
+
+    const facility = FACILITIES.find((f) => f.id === referral.facilityId);
+
+    setIsSendingSMS(true);
+    try {
+      const response = await fetch('/api/sms/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: referral.patientPhone,
+          patientName: referral.patientName,
+          appointmentDate: referral.appointmentDate,
+          facility: facility?.name,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error('Failed to send');
+
+      if (data.demo) {
+        toast.success('Demo mode: SMS reminder would be sent');
+      } else {
+        toast.success(`SMS sent to ${referral.patientPhone}`);
+      }
+    } catch (error) {
+      toast.error('Failed to send reminder');
+    } finally {
+      setIsSendingSMS(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <Button variant="ghost" onClick={() => router.push('/dashboard')}>
@@ -198,6 +235,17 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
                 <Button variant="outline" onClick={handleDownloadICS}>
                   <CalendarPlus className="mr-2 h-4 w-4" />
                   Add to Calendar
+                </Button>
+              )}
+
+              {referral.patientPhone && referral.appointmentDate && (
+                <Button
+                  variant="outline"
+                  onClick={handleSendReminder}
+                  disabled={isSendingSMS}
+                >
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  {isSendingSMS ? 'Sending...' : 'Send SMS Reminder'}
                 </Button>
               )}
             </div>
