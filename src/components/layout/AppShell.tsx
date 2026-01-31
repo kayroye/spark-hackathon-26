@@ -45,7 +45,9 @@ export function AppShell({ children }: AppShellProps) {
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
       <SidebarInset>
-        <Header />
+        <div className="lg:hidden">
+          <Header />
+        </div>
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
       </SidebarInset>
 

@@ -6,7 +6,7 @@ import { Calendar, FileText, Loader2, Phone, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { AppSidebar } from '@/components/layout/Sidebar';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export default function PatientLayout({
   children,
@@ -61,30 +61,31 @@ export default function PatientLayout({
     <SidebarProvider defaultOpen={true}>
       <AppSidebar navItems={patientNavItems} />
       <SidebarInset>
-        {/* Simplified Patient Header */}
-        <header className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <SidebarTrigger className="md:flex" />
-              <Link href="/my-referrals" className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-linear-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-sm">
-                  <span className="text-white text-lg font-bold">R</span>
-                </div>
-                <span className="text-xl font-bold text-slate-800 dark:text-slate-100">
-                  ReferralLoop
-                </span>
-              </Link>
-            </div>
+        {/* Simplified Patient Header (mobile only) */}
+        <div className="md:hidden">
+          <header className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+            <div className="px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Link href="/my-referrals" className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-linear-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-sm">
+                    <span className="text-white text-base font-bold">R</span>
+                  </div>
+                  <span className="text-base font-bold text-slate-800 dark:text-slate-100">
+                    ReferralLoop
+                  </span>
+                </Link>
+              </div>
 
-            <div className="flex items-center gap-4">
-              {user && (
-                <span className="hidden sm:inline text-sm text-slate-600 dark:text-slate-400">
-                  {user.name}
-                </span>
-              )}
+              <div className="flex items-center gap-4">
+                {user && (
+                  <span className="hidden sm:inline text-sm text-slate-600 dark:text-slate-400">
+                    {user.name}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        </div>
 
         {/* Main Content with increased padding and larger text */}
         <main className="p-6 text-lg">{children}</main>

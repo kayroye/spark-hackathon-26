@@ -1,19 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { LayoutDashboard, Plus, Settings, User, LogOut } from 'lucide-react';
+import { LayoutDashboard, Plus, Settings, User, LogOut, RefreshCw, Wifi, WifiOff } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNetwork } from '@/contexts/NetworkContext';
+import { useReferrals } from '@/lib/db/hooks';
 import { ThemeToggle } from '@/components/theme';
+import { Switch } from '@/components/ui/switch';
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
@@ -41,11 +48,25 @@ export function AppSidebar({ navItems: navItemsProp }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout, isNurse } = useAuth();
+  const { isOnline, toggleNetwork } = useNetwork();
+  const { syncAll, referrals } = useReferrals();
+  const [isSyncing, setIsSyncing] = useState(false);
   const { state } = useSidebar();
+
+  const unsyncedCount = referrals.filter((r) => !r.isSynced).length;
 
   const handleLogout = () => {
     logout();
     router.push('/login');
+  };
+
+  const handleSync = async () => {
+    if (isOnline && unsyncedCount > 0) {
+      setIsSyncing(true);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await syncAll();
+      setIsSyncing(false);
+    }
   };
 
   // Use provided items, otherwise default to nurse nav
@@ -94,6 +115,57 @@ export function AppSidebar({ navItems: navItemsProp }: SidebarProps) {
                   </SidebarMenuItem>
                 );
               })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={handleSync}
+                  tooltip={state === 'collapsed' ? 'Sync referrals' : undefined}
+                  disabled={!isOnline || unsyncedCount === 0 || isSyncing}
+                  className={`
+                    transition-all duration-200 pr-10
+                    ${isSyncing ? 'bg-interactive-muted border-interactive-muted' : ''}
+                    ${unsyncedCount > 0 && isOnline ? 'border-interactive hover:bg-interactive-muted hover:border-interactive' : ''}
+                  `}
+                >
+                  <RefreshCw className={`${isSyncing ? 'animate-spin text-interactive-foreground' : ''}`} />
+                  <span>{isSyncing ? 'Syncing...' : 'Sync referrals'}</span>
+                </SidebarMenuButton>
+                {unsyncedCount > 0 && (
+                  <SidebarMenuBadge className="bg-interactive-muted text-interactive-foreground">
+                    {unsyncedCount}
+                  </SidebarMenuBadge>
+                )}
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip={state === 'collapsed' ? 'Network' : undefined} className="pr-12">
+                  {isOnline ? (
+                    <Wifi className="text-completed-foreground" />
+                  ) : (
+                    <WifiOff className="text-muted-foreground" />
+                  )}
+                  <span>Network</span>
+                  <span className="ml-auto text-xs text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
+                    {isOnline ? 'Online' : 'Offline'}
+                  </span>
+                </SidebarMenuButton>
+                <SidebarMenuAction asChild>
+                  <div className="flex items-center">
+                    <Switch
+                      checked={isOnline}
+                      onCheckedChange={toggleNetwork}
+                      className="data-[state=checked]:bg-completed"
+                    />
+                  </div>
+                </SidebarMenuAction>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
