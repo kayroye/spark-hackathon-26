@@ -1,8 +1,14 @@
-export default function PatientPage({ params }: { params: { id: string } }) {
+'use client';
+
+import { use } from 'react';
+import { PatientDetail } from '@/components/patient/PatientDetail';
+
+export default function PatientPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold">Patient Details</h2>
-      <p className="text-gray-500">Referral ID: {params.id}</p>
+      <PatientDetail referralId={id} />
     </div>
   );
 }

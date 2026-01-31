@@ -4,6 +4,7 @@ import './globals.css';
 import { NetworkProvider } from '@/contexts/NetworkContext';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1 pb-20">{children}</main>
             <BottomNav />
+            <Toaster />
           </div>
         </NetworkProvider>
       </body>
