@@ -107,7 +107,7 @@ export function KanbanBoard() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <p className="text-gray-500">Loading referrals...</p>
+        <p className="text-muted-foreground">Loading referrals...</p>
       </div>
     );
   }

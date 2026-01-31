@@ -44,6 +44,32 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  
+  /* Status colors */
+  --color-pending: var(--pending);
+  --color-pending-foreground: var(--pending-foreground);
+  --color-pending-muted: var(--pending-muted);
+  
+  --color-scheduled: var(--scheduled);
+  --color-scheduled-foreground: var(--scheduled-foreground);
+  --color-scheduled-muted: var(--scheduled-muted);
+  
+  --color-completed: var(--completed);
+  --color-completed-foreground: var(--completed-foreground);
+  --color-completed-muted: var(--completed-muted);
+  
+  --color-missed: var(--missed);
+  --color-missed-foreground: var(--missed-foreground);
+  --color-missed-muted: var(--missed-muted);
+  
+  /* Interactive */
+  --color-interactive: var(--interactive);
+  --color-interactive-foreground: var(--interactive-foreground);
+  --color-interactive-muted: var(--interactive-muted);
+  
+  /* Surface hierarchy */
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-sunken: var(--surface-sunken);
 }
 
 :root {
@@ -79,6 +105,32 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Status colors - light mode */
+  --pending: oklch(0.74 0.15 75);
+  --pending-foreground: oklch(0.45 0.18 75);
+  --pending-muted: oklch(0.96 0.06 75);
+  
+  --scheduled: oklch(0.6 0.11 180);
+  --scheduled-foreground: oklch(0.35 0.12 180);
+  --scheduled-muted: oklch(0.96 0.04 180);
+  
+  --completed: oklch(0.65 0.15 150);
+  --completed-foreground: oklch(0.4 0.14 150);
+  --completed-muted: oklch(0.96 0.04 150);
+  
+  --missed: oklch(0.62 0.22 15);
+  --missed-foreground: oklch(0.48 0.22 15);
+  --missed-muted: oklch(0.97 0.04 15);
+  
+  /* Interactive/focus states */
+  --interactive: oklch(0.59 0.15 240);
+  --interactive-foreground: oklch(0.4 0.16 240);
+  --interactive-muted: oklch(0.96 0.04 240);
+  
+  /* Surface hierarchy */
+  --surface-elevated: oklch(1 0 0);
+  --surface-sunken: oklch(0.98 0 0);
 }
 
 .dark {
@@ -113,6 +165,32 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  
+  /* Status colors - dark mode */
+  --pending: oklch(0.65 0.14 75);
+  --pending-foreground: oklch(0.85 0.12 75);
+  --pending-muted: oklch(0.25 0.06 75);
+  
+  --scheduled: oklch(0.6 0.11 180);
+  --scheduled-foreground: oklch(0.8 0.1 180);
+  --scheduled-muted: oklch(0.25 0.05 180);
+  
+  --completed: oklch(0.65 0.12 150);
+  --completed-foreground: oklch(0.8 0.11 150);
+  --completed-muted: oklch(0.25 0.05 150);
+  
+  --missed: oklch(0.62 0.2 15);
+  --missed-foreground: oklch(0.82 0.16 15);
+  --missed-muted: oklch(0.25 0.06 15);
+  
+  /* Interactive/focus states */
+  --interactive: oklch(0.65 0.15 240);
+  --interactive-foreground: oklch(0.85 0.12 240);
+  --interactive-muted: oklch(0.25 0.06 240);
+  
+  /* Surface hierarchy */
+  --surface-elevated: oklch(0.24 0 0);
+  --surface-sunken: oklch(0.18 0 0);
 }
 
 @layer base {
@@ -121,5 +199,144 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  
+  /* Custom scrollbar styles */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted));
+    border-radius: 20px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+  
+  /* Kanban column headers */
+  .column-header-pending {
+    background-color: hsl(var(--pending-muted));
+  }
+  
+  .column-header-scheduled {
+    background-color: hsl(var(--scheduled-muted));
+  }
+  
+  .column-header-completed {
+    background-color: hsl(var(--completed-muted));
+  }
+  
+  .column-header-missed {
+    background-color: hsl(var(--missed-muted));
+  }
+  
+  /* Card styles */
+  .card-elevated {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  .card-elevated:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  
+  .card-overdue {
+    animation: pulse-overdue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-overdue {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+  
+  /* Priority badges */
+  .badge-low {
+    background-color: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .badge-medium {
+    background-color: hsl(var(--pending-muted));
+    color: hsl(var(--pending-foreground));
+  }
+  
+  .badge-high {
+    background-color: hsl(var(--missed-muted));
+    color: hsl(var(--missed-foreground));
+  }
+  
+  .badge-critical {
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+    font-weight: 600;
+  }
+  
+  /* Sync pulse animation */
+  .sync-pulse {
+    animation: sync-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes sync-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Typography utilities */
+  .heading-1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  .heading-2 {
+    font-size: 1.875rem;
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  
+  .heading-3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  
+  .heading-4 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+  
+  .heading-5 {
+    font-size: 1.125rem;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+  
+  .heading-6 {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 700;
   }
 }

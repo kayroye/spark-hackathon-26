@@ -34,7 +34,7 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
   const cardContent = (
     <Card
       className={`
-        cursor-pointer card-elevated bg-white
+        cursor-pointer card-elevated bg-card
         ${isOverdue ? 'border-destructive border-2 card-overdue' : 'border-transparent'}
         ${isDragging ? 'opacity-50 shadow-lg' : ''}
         ${isDraggingOverlay ? 'shadow-2xl border-interactive border-2' : ''}

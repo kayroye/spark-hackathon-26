@@ -78,7 +78,7 @@ export function KanbanColumn({ title, status, referrals }: KanbanColumnProps) {
         className={`
           flex-1 space-y-3 overflow-y-auto rounded-b-xl p-3 custom-scrollbar border border-t-0 border-border
           transition-colors duration-200
-          ${isOver ? 'bg-interactive-muted ring-2 ring-interactive ring-inset' : 'bg-white/50'}
+          ${isOver ? 'bg-interactive-muted ring-2 ring-interactive ring-inset' : 'bg-card/50'}
         `}
       >
         {sortedReferrals.map((referral) => (
