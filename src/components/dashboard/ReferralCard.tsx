@@ -50,7 +50,7 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
             </h3>
             <p className="text-sm text-muted-foreground mt-0.5">{referral.referralType}</p>
           </div>
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0">
             {!isDraggingOverlay && (
               <div
                 {...listeners}
@@ -80,7 +80,7 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
           </p>
 
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <MapPin className="h-3 w-3 flex-shrink-0" />
+            <MapPin className="h-3 w-3 shrink-0" />
             <span className="truncate">{facility?.name}</span>
             <span className="text-muted-foreground/60">·</span>
             <span className="font-medium text-foreground/70">{facility?.distance}</span>
