@@ -1,0 +1,353 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { MountainRidge } from '@/components/ui/mountain-ridge';
+import { useAuth } from '@/contexts/AuthContext';
+import { User, Stethoscope, Mail, Lock, Loader2, CheckCircle } from 'lucide-react';
+
+type RoleSelection = 'patient' | 'nurse' | null;
+
+export default function LoginPage() {
+  const router = useRouter();
+  const { login, isAuthenticated, isNurse, isPatient, loading: authLoading } = useAuth();
+
+  const [selectedRole, setSelectedRole] = useState<RoleSelection>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [magicLinkUrl, setMagicLinkUrl] = useState<string | null>(null);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      if (isNurse) {
+        router.push('/dashboard');
+      } else if (isPatient) {
+        router.push('/my-referrals');
+      }
+    }
+  }, [isAuthenticated, isNurse, isPatient, authLoading, router]);
+
+  const handlePatientLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/magic-link/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send magic link');
+      }
+
+      setMagicLinkSent(true);
+
+      // For demo purposes, show the magic link URL
+      if (data.demo && data.url) {
+        setMagicLinkUrl(data.url);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNurseLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      await login(email, password);
+      router.push('/dashboard');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Invalid credentials');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50 relative overflow-hidden">
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative z-10">
+        {/* Logo */}
+        <div className="mb-8 flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center shadow-lg">
+            <span className="text-white text-xl font-bold">R</span>
+          </div>
+          <h1 className="heading-2 text-slate-800">ReferralLoop</h1>
+        </div>
+
+        {/* Tagline */}
+        <p className="text-slate-600 text-lg mb-10 text-center max-w-md">
+          Seamless healthcare referral coordination for patients and providers
+        </p>
+
+        {/* Role Selection Cards */}
+        {!selectedRole && (
+          <div className="w-full max-w-lg space-y-6">
+            <h2 className="heading-4 text-center text-slate-700 mb-6">How would you like to sign in?</h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Patient Card */}
+              <button
+                onClick={() => setSelectedRole('patient')}
+                className="group p-6 bg-white rounded-xl border-2 border-slate-200 hover:border-teal-400 hover:shadow-lg transition-all duration-200 text-left"
+              >
+                <div className="w-14 h-14 rounded-lg bg-teal-50 flex items-center justify-center mb-4 group-hover:bg-teal-100 transition-colors">
+                  <User className="h-7 w-7 text-teal-600" />
+                </div>
+                <h3 className="heading-5 text-slate-800 mb-2">I'm a Patient</h3>
+                <p className="text-sm text-slate-500">
+                  Access your referrals and appointments with a secure magic link
+                </p>
+              </button>
+
+              {/* Healthcare Provider Card */}
+              <button
+                onClick={() => setSelectedRole('nurse')}
+                className="group p-6 bg-white rounded-xl border-2 border-slate-200 hover:border-teal-400 hover:shadow-lg transition-all duration-200 text-left"
+              >
+                <div className="w-14 h-14 rounded-lg bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-200 transition-colors">
+                  <Stethoscope className="h-7 w-7 text-slate-600" />
+                </div>
+                <h3 className="heading-5 text-slate-800 mb-2">I'm a Healthcare Provider</h3>
+                <p className="text-sm text-slate-500">
+                  Manage patient referrals and coordinate care
+                </p>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Patient Login Form */}
+        {selectedRole === 'patient' && !magicLinkSent && (
+          <div className="w-full max-w-md">
+            <button
+              onClick={() => setSelectedRole(null)}
+              className="text-sm text-slate-500 hover:text-slate-700 mb-6 flex items-center gap-1"
+            >
+              <span>&larr;</span> Back to role selection
+            </button>
+
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+                  <User className="h-5 w-5 text-teal-600" />
+                </div>
+                <h2 className="heading-4 text-slate-800">Patient Sign In</h2>
+              </div>
+
+              <p className="text-slate-600 mb-6">
+                Enter your email address and we'll send you a secure link to access your portal.
+              </p>
+
+              <form onSubmit={handlePatientLogin} className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="pl-10 h-11"
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  className="w-full h-11"
+                  disabled={loading || !email}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Send Magic Link
+                    </>
+                  )}
+                </Button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Magic Link Sent Confirmation */}
+        {selectedRole === 'patient' && magicLinkSent && (
+          <div className="w-full max-w-md">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 text-center">
+              <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="h-8 w-8 text-teal-600" />
+              </div>
+
+              <h2 className="heading-4 text-slate-800 mb-3">Check Your Email</h2>
+              <p className="text-slate-600 mb-6">
+                We've sent a secure login link to <strong>{email}</strong>.
+                Click the link to access your patient portal.
+              </p>
+
+              {/* Demo mode: show the magic link */}
+              {magicLinkUrl && (
+                <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg mb-6">
+                  <p className="text-sm text-amber-800 font-medium mb-2">Demo Mode</p>
+                  <a
+                    href={magicLinkUrl}
+                    className="text-sm text-teal-600 hover:text-teal-700 underline break-all"
+                  >
+                    Click here to sign in
+                  </a>
+                </div>
+              )}
+
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setMagicLinkSent(false);
+                  setMagicLinkUrl(null);
+                  setSelectedRole(null);
+                }}
+                className="w-full"
+              >
+                Back to Login
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Nurse Login Form */}
+        {selectedRole === 'nurse' && (
+          <div className="w-full max-w-md">
+            <button
+              onClick={() => setSelectedRole(null)}
+              className="text-sm text-slate-500 hover:text-slate-700 mb-6 flex items-center gap-1"
+            >
+              <span>&larr;</span> Back to role selection
+            </button>
+
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                  <Stethoscope className="h-5 w-5 text-slate-600" />
+                </div>
+                <h2 className="heading-4 text-slate-800">Provider Sign In</h2>
+              </div>
+
+              <form onSubmit={handleNurseLogin} className="space-y-4">
+                <div>
+                  <label htmlFor="nurse-email" className="block text-sm font-medium text-slate-700 mb-1.5">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                    <Input
+                      id="nurse-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@referralloop.com"
+                      className="pl-10 h-11"
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      className="pl-10 h-11"
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full h-11"
+                  disabled={loading || !email || !password}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Signing In...
+                    </>
+                  ) : (
+                    'Sign In'
+                  )}
+                </Button>
+              </form>
+
+              <div className="mt-6 pt-4 border-t border-slate-100">
+                <p className="text-xs text-slate-500 text-center">
+                  Demo: Use any email ending in @referralloop.com, @hospital.com, or @clinic.com with any password
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Mountain Ridge Background */}
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+        <MountainRidge color="#cbd5e1" className="h-40 sm:h-48 md:h-56" />
+      </div>
+    </div>
+  );
+}

@@ -12,7 +12,7 @@ export function Header() {
   const { syncAll, referrals } = useReferrals();
   const [isSyncing, setIsSyncing] = useState(false);
 
-  const unsyncedCount = referrals.filter((r) => !r.synced).length;
+  const unsyncedCount = referrals.filter((r) => !r.isSynced).length;
 
   const handleSync = async () => {
     if (isOnline && unsyncedCount > 0) {
@@ -30,10 +30,10 @@ export function Header() {
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-sm">
               <span className="text-white text-sm font-bold">R</span>
             </div>
-            <h1 className="text-lg font-bold tracking-tight bg-gradient-to-r from-sky-600 to-sky-500 bg-clip-text text-transparent">
+            <h1 className="text-lg font-bold tracking-tight bg-linear-to-r from-sky-600 to-sky-500 bg-clip-text text-transparent">
               ReferralLoop
             </h1>
           </div>

@@ -94,7 +94,7 @@ export async function seedDatabase() {
       ...referral,
       id: uuidv4(),
       updatedAt: now,
-      synced: Math.random() > 0.3, // 70% synced, 30% pending
+      isSynced: Math.random() > 0.3, // 70% synced, 30% pending
     });
   }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Referral, Status } from '@/lib/db/schema';
+import { ReferralWithMeta, Status } from '@/lib/db/schema';
 import { ReferralCard } from './ReferralCard';
 import { Clock, Calendar, CheckCircle2, XCircle } from 'lucide-react';
 import { useDroppable } from '@dnd-kit/core';
@@ -8,7 +8,7 @@ import { useDroppable } from '@dnd-kit/core';
 interface KanbanColumnProps {
   title: string;
   status: Status;
-  referrals: Referral[];
+  referrals: ReferralWithMeta[];
 }
 
 const columnConfig: Record<Status, {
@@ -52,10 +52,8 @@ export function KanbanColumn({ title, status, referrals }: KanbanColumnProps) {
   // Sort overdue referrals to top for pending column
   const sortedReferrals = [...referrals].sort((a, b) => {
     if (status === 'pending') {
-      const aDays = Math.floor((Date.now() - new Date(a.createdAt).getTime()) / (1000 * 60 * 60 * 24));
-      const bDays = Math.floor((Date.now() - new Date(b.createdAt).getTime()) / (1000 * 60 * 60 * 24));
-      const aOverdue = aDays >= 14;
-      const bOverdue = bDays >= 14;
+      const aOverdue = a.isOverdue;
+      const bOverdue = b.isOverdue;
       if (aOverdue && !bOverdue) return -1;
       if (!aOverdue && bOverdue) return 1;
     }

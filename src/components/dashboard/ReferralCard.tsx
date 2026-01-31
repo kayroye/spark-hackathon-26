@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Clock, CheckCircle2, MapPin, AlertCircle, GripVertical } from 'lucide-react';
-import { Referral, FACILITIES } from '@/lib/db/schema';
+import { ReferralWithMeta, FACILITIES } from '@/lib/db/schema';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
 interface ReferralCardProps {
-  referral: Referral;
+  referral: ReferralWithMeta;
   isDragging?: boolean;
 }
 
@@ -21,9 +21,7 @@ const priorityStyles: Record<string, string> = {
 
 export function ReferralCard({ referral, isDragging: isDraggingOverlay }: ReferralCardProps) {
   const facility = FACILITIES.find((f) => f.id === referral.facilityId);
-  const createdDate = new Date(referral.createdAt);
-  const daysSinceCreated = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
-  const isOverdue = referral.status === 'pending' && daysSinceCreated >= 14;
+  const isOverdue = referral.isOverdue;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: referral.id,
@@ -61,7 +59,7 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
                 <GripVertical className="h-4 w-4 text-gray-400" />
               </div>
             )}
-            {referral.synced ? (
+            {referral.isSynced ? (
               <div className="flex items-center gap-1 text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
               </div>

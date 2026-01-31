@@ -1,12 +1,25 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Merriweather, Source_Sans_3 } from 'next/font/google';
 import './globals.css';
 import { NetworkProvider } from '@/contexts/NetworkContext';
-import { Header } from '@/components/layout/Header';
-import { BottomNav } from '@/components/layout/BottomNav';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/components/theme';
+import { AppShell } from '@/components/layout/AppShell';
 import { Toaster } from '@/components/ui/sonner';
 
-const inter = Inter({ subsets: ['latin'] });
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-merriweather',
+  display: 'swap',
+});
+
+const sourceSans3 = Source_Sans_3({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-source-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'ReferralLoop - Offline-First Patient Referral Tracking',
@@ -19,16 +32,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <NetworkProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1 pb-20">{children}</main>
-            <BottomNav />
-            <Toaster />
-          </div>
-        </NetworkProvider>
+    <html lang="en" className={`${merriweather.variable} ${sourceSans3.variable}`} suppressHydrationWarning>
+      <body className="font-sans">
+        <ThemeProvider>
+          <AuthProvider>
+            <NetworkProvider>
+              <AppShell>
+                {children}
+              </AppShell>
+              <Toaster />
+            </NetworkProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,12 +2,12 @@
 
 import { KanbanBoard } from '@/components/dashboard/KanbanBoard';
 
-export default function DashboardPage() {
+export default function NurseDashboardPage() {
   return (
     <div className="p-4">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold">Referral Dashboard</h2>
-        <p className="text-gray-500">
+        <h2 className="heading-3 text-slate-800">Referral Dashboard</h2>
+        <p className="text-slate-500">
           Track and manage patient referrals for Clearwater Ridge
         </p>
       </div>

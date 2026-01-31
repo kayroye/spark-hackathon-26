@@ -1,34 +1,125 @@
 @import "tailwindcss";
 
-:root {
-  --background: 210 20% 98%;
-  --foreground: 215 25% 15%;
-  --card: 0 0% 100%;
-  --card-foreground: 215 25% 15%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 215 25% 15%;
-  --primary: 199 89% 42%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 210 25% 95%;
-  --secondary-foreground: 215 25% 25%;
-  --muted: 210 20% 96%;
-  --muted-foreground: 215 15% 50%;
-  --accent: 199 70% 94%;
-  --accent-foreground: 199 89% 30%;
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 214 20% 90%;
-  --input: 214 20% 90%;
-  --ring: 199 89% 42%;
-  --radius: 0.625rem;
+@theme {
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-merriweather), ui-serif, Georgia, serif;
+}
 
-  /* Custom healthcare colors */
+:root {
+  /* Northern Professional Color Palette - Light Mode */
+  --background: 210 40% 98%; /* Cool white #f8fafc */
+  --foreground: 215 19% 35%; /* Slate blue #475569 */
+  --card: 0 0% 100%; /* Pure white #ffffff */
+  --card-foreground: 215 19% 35%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 19% 35%;
+  --primary: 215 16% 47%; /* Slate blue #64748b */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 215 19% 35%;
+  --muted: 215 16% 47%; /* Slate #94a3b8 - adjusted for HSL */
+  --muted-foreground: 215 14% 63%;
+  --accent: 168 84% 32%; /* Deep teal #0d9488 */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 350 89% 52%; /* Rose #e11d48 */
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 168 84% 32%; /* Deep teal for focus rings */
+  --radius: 0.5rem; /* 8px standard */
+
+  /* Custom healthcare colors - Northern Professional */
   --success: 152 69% 40%;
-  --warning: 38 92% 50%;
+  --warning: 38 92% 50%; /* Amber #f59e0b */
   --pending: 38 92% 50%;
-  --scheduled: 199 89% 42%;
+  --scheduled: 168 84% 32%; /* Deep teal */
   --completed: 152 69% 40%;
-  --missed: 0 72% 51%;
+  --missed: 350 89% 52%; /* Rose */
+  --critical: 350 89% 52%; /* Rose #e11d48 */
+  --alert: 38 92% 50%; /* Amber #f59e0b */
+  --surface: 210 40% 98%; /* Cool white #f8fafc */
+
+  /* Sidebar colors - Light mode */
+  --sidebar-bg: 222 47% 11%; /* Deep slate #0f172a */
+  --sidebar-border: 217 33% 17%; /* Slate border #1e293b */
+  --sidebar-foreground: 215 14% 63%; /* Muted text */
+  --sidebar-foreground-active: 0 0% 100%; /* White for active */
+  --sidebar-accent: 168 84% 40%; /* Teal accent */
+
+  /* Typography */
+  --font-size-base: 16px;
+  --line-height-base: 1.6;
+}
+
+/* Northern Night - Dark Mode */
+.dark {
+  /* Deep slate backgrounds with subtle blue undertones */
+  --background: 222 47% 8%; /* Very deep slate #0a0f1a */
+  --foreground: 210 40% 92%; /* Light cool gray #e8eef5 */
+  --card: 222 47% 11%; /* Deep slate card #0f172a */
+  --card-foreground: 210 40% 92%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 92%;
+  --primary: 210 40% 80%; /* Light slate for primary */
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 33% 17%; /* Elevated surface #1e293b */
+  --secondary-foreground: 210 40% 92%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 55%; /* Dimmed text */
+  --accent: 168 76% 42%; /* Brighter teal for dark bg #14b8a6 */
+  --accent-foreground: 222 47% 11%;
+  --destructive: 350 80% 58%; /* Brighter rose for dark #f43f5e */
+  --destructive-foreground: 0 0% 100%;
+  --border: 217 33% 20%; /* Subtle border */
+  --input: 217 33% 20%;
+  --ring: 168 76% 42%; /* Teal focus rings */
+
+  /* Healthcare colors - adjusted for dark mode visibility */
+  --success: 152 60% 50%; /* Brighter green */
+  --warning: 38 92% 55%; /* Brighter amber */
+  --pending: 38 92% 55%;
+  --scheduled: 168 76% 42%; /* Brighter teal */
+  --completed: 152 60% 50%;
+  --missed: 350 80% 58%; /* Brighter rose */
+  --critical: 350 80% 58%;
+  --alert: 38 92% 55%;
+  --surface: 222 47% 8%; /* Match background */
+
+  /* Sidebar colors - Dark mode (slightly elevated from main bg) */
+  --sidebar-bg: 222 47% 6%; /* Even deeper #070a12 */
+  --sidebar-border: 217 33% 14%; /* Subtle border */
+  --sidebar-foreground: 215 20% 55%;
+  --sidebar-foreground-active: 0 0% 100%;
+  --sidebar-accent: 168 76% 42%;
+}
+
+/* Text size modifiers */
+html[data-text-size="default"] {
+  font-size: 16px;
+}
+
+html[data-text-size="large"] {
+  font-size: 18px;
+}
+
+html[data-text-size="xl"] {
+  font-size: 20px;
+}
+
+.text-size-default {
+  font-size: 16px;
+}
+
+.text-size-large {
+  font-size: 18px;
+}
+
+.text-size-xl {
+  font-size: 20px;
+}
+
+.text-size-extra-large {
+  font-size: 22px;
 }
 
 * {
@@ -36,11 +127,102 @@
 }
 
 body {
-  background: linear-gradient(135deg, hsl(210 30% 98%) 0%, hsl(199 30% 96%) 100%);
+  background: hsl(var(--surface));
   color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.2s ease;
+}
+
+/* Dark mode transition for smooth theme switching */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Typography classes - Headings use Merriweather */
+.heading-1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2.25rem; /* 36px */
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+}
+
+.heading-2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.875rem; /* 30px */
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: hsl(var(--foreground));
+}
+
+.heading-3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: hsl(var(--foreground));
+}
+
+.heading-4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.4;
+  color: hsl(var(--foreground));
+}
+
+.heading-5 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.4;
+  color: hsl(var(--foreground));
+}
+
+.heading-6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+  color: hsl(var(--foreground));
+}
+
+/* Body text variants */
+.body-large {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.body-default {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.body-small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.body-medium {
+  font-weight: 500;
+}
+
+.body-semibold {
+  font-weight: 600;
 }
 
 /* Refined card styles */
@@ -58,7 +240,22 @@ body {
   transform: translateY(-2px);
 }
 
-/* Overdue card pulse animation */
+/* Dark mode card styles */
+.dark .card-elevated {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid hsl(217 33% 18%);
+}
+
+.dark .card-elevated:hover {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: hsl(217 33% 24%);
+}
+
+/* Overdue card pulse animation - using Rose critical color */
 .card-overdue {
   animation: overdue-pulse 2s ease-in-out infinite;
 }
@@ -66,13 +263,13 @@ body {
 @keyframes overdue-pulse {
   0%, 100% {
     box-shadow:
-      0 0 0 0 rgba(239, 68, 68, 0),
+      0 0 0 0 rgba(225, 29, 72, 0),
       0 1px 3px rgba(0, 0, 0, 0.04);
   }
   50% {
     box-shadow:
-      0 0 0 4px rgba(239, 68, 68, 0.1),
-      0 4px 12px rgba(239, 68, 68, 0.15);
+      0 0 0 4px rgba(225, 29, 72, 0.1),
+      0 4px 12px rgba(225, 29, 72, 0.12);
   }
 }
 
@@ -109,21 +306,38 @@ body {
   }
 }
 
-/* Kanban column header gradient */
+/* Kanban column header - flatter, more subtle backgrounds */
 .column-header-pending {
-  background: linear-gradient(135deg, hsl(38 92% 95%) 0%, hsl(38 80% 90%) 100%);
+  background: hsl(38 80% 96%); /* Subtle amber */
 }
 
 .column-header-scheduled {
-  background: linear-gradient(135deg, hsl(199 70% 95%) 0%, hsl(199 60% 90%) 100%);
+  background: hsl(168 60% 95%); /* Subtle teal */
 }
 
 .column-header-completed {
-  background: linear-gradient(135deg, hsl(152 50% 95%) 0%, hsl(152 40% 90%) 100%);
+  background: hsl(152 45% 95%); /* Subtle green */
 }
 
 .column-header-missed {
-  background: linear-gradient(135deg, hsl(0 70% 96%) 0%, hsl(0 60% 92%) 100%);
+  background: hsl(350 65% 96%); /* Subtle rose */
+}
+
+/* Dark mode column headers */
+.dark .column-header-pending {
+  background: hsl(38 60% 12%); /* Dark amber */
+}
+
+.dark .column-header-scheduled {
+  background: hsl(168 50% 12%); /* Dark teal */
+}
+
+.dark .column-header-completed {
+  background: hsl(152 40% 12%); /* Dark green */
+}
+
+.dark .column-header-missed {
+  background: hsl(350 50% 12%); /* Dark rose */
 }
 
 /* Smooth scrollbar */
@@ -144,10 +358,24 @@ body {
   background: hsl(var(--muted-foreground));
 }
 
+/* Dark mode scrollbar */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(217 33% 25%);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(217 33% 35%);
+}
+
 /* Header glass effect */
 .header-glass {
   backdrop-filter: blur(12px);
   background: rgba(255, 255, 255, 0.85);
+}
+
+.dark .header-glass {
+  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.85); /* Slate 900 */
 }
 
 .header-glass-offline {
@@ -155,9 +383,14 @@ body {
   background: rgba(251, 191, 36, 0.08);
 }
 
-/* Badge refinements */
+.dark .header-glass-offline {
+  backdrop-filter: blur(12px);
+  background: rgba(251, 191, 36, 0.12);
+}
+
+/* Badge refinements - flatter, Northern Professional palette */
 .badge-critical {
-  background: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 72% 51%) 100%);
+  background: hsl(350 89% 52%); /* Rose */
   color: white;
   font-weight: 600;
   text-transform: uppercase;
@@ -165,19 +398,40 @@ body {
 }
 
 .badge-high {
-  background: linear-gradient(135deg, hsl(25 95% 53%) 0%, hsl(21 90% 48%) 100%);
+  background: hsl(38 92% 50%); /* Amber */
   color: white;
   font-weight: 500;
 }
 
 .badge-medium {
-  background: hsl(199 70% 94%);
-  color: hsl(199 89% 30%);
+  background: hsl(168 60% 94%); /* Teal light */
+  color: hsl(168 84% 25%);
   font-weight: 500;
 }
 
 .badge-low {
-  background: hsl(210 20% 94%);
-  color: hsl(215 15% 45%);
+  background: hsl(215 20% 94%); /* Slate light */
+  color: hsl(215 16% 47%);
   font-weight: 500;
+}
+
+/* Dark mode badges */
+.dark .badge-critical {
+  background: hsl(350 80% 45%);
+  color: white;
+}
+
+.dark .badge-high {
+  background: hsl(38 85% 45%);
+  color: white;
+}
+
+.dark .badge-medium {
+  background: hsl(168 50% 20%);
+  color: hsl(168 70% 65%);
+}
+
+.dark .badge-low {
+  background: hsl(215 25% 20%);
+  color: hsl(215 20% 65%);
 }

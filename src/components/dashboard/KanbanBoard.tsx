@@ -2,7 +2,7 @@
 
 import { useReferrals } from '@/lib/db/hooks';
 import { KanbanColumn } from './KanbanColumn';
-import { Status } from '@/lib/db/schema';
+import { ReferralWithMeta, Status } from '@/lib/db/schema';
 import { Button } from '@/components/ui/button';
 import { Database, Trash2 } from 'lucide-react';
 import { useSeed } from '@/lib/db/use-seed';
@@ -19,6 +19,7 @@ import {
 } from '@dnd-kit/core';
 import { useState } from 'react';
 import { ReferralCard } from './ReferralCard';
+import { OverdueConfirmDialog } from './OverdueConfirmDialog';
 
 const columns: { title: string; status: Status }[] = [
   { title: 'Pending', status: 'pending' },
@@ -31,6 +32,11 @@ export function KanbanBoard() {
   const { referrals, loading, updateStatus } = useReferrals();
   const { seed, clear, isSeeding } = useSeed();
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [pendingMove, setPendingMove] = useState<{
+    referral: ReferralWithMeta;
+    newStatus: Status;
+  } | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -69,9 +75,31 @@ export function KanbanBoard() {
 
     const referral = referrals.find((r) => r.id === referralId);
     if (referral && referral.status !== newStatus) {
-      await updateStatus(referralId, newStatus);
-      toast.success(`Moved to ${newStatus}`);
+      // Check if the referral is overdue
+      if (referral.isOverdue) {
+        // Show confirmation dialog for overdue referrals
+        setPendingMove({ referral, newStatus });
+        setDialogOpen(true);
+      } else {
+        // Move immediately for non-overdue referrals
+        await updateStatus(referralId, newStatus);
+        toast.success(`Moved to ${newStatus}`);
+      }
     }
+  };
+
+  const handleConfirmMove = async (note: string) => {
+    if (pendingMove) {
+      await updateStatus(pendingMove.referral.id, pendingMove.newStatus, note);
+      toast.success(`Moved to ${pendingMove.newStatus}`);
+      setPendingMove(null);
+      setDialogOpen(false);
+    }
+  };
+
+  const handleCancelMove = () => {
+    setPendingMove(null);
+    setDialogOpen(false);
   };
 
   const activeReferral = activeId ? referrals.find((r) => r.id === activeId) : null;
@@ -133,6 +161,17 @@ export function KanbanBoard() {
           ) : null}
         </DragOverlay>
       </DndContext>
+
+      {pendingMove && (
+        <OverdueConfirmDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          referral={pendingMove.referral}
+          newStatus={pendingMove.newStatus}
+          onConfirm={handleConfirmMove}
+          onCancel={handleCancelMove}
+        />
+      )}
     </div>
   );
 }

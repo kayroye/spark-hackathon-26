@@ -53,10 +53,8 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
 
   const facility = FACILITIES.find((f) => f.id === referral.facilityId);
   const createdDate = new Date(referral.createdAt).toLocaleDateString();
-  const daysSinceCreated = Math.floor(
-    (Date.now() - new Date(referral.createdAt).getTime()) / (1000 * 60 * 60 * 24)
-  );
-  const isOverdue = referral.status === 'pending' && daysSinceCreated >= 14;
+  const daysSinceCreated = referral.daysSinceCreated;
+  const isOverdue = referral.isOverdue;
 
   const handleStatusChange = async (newStatus: Status) => {
     await updateStatus(referral.id, newStatus);
@@ -101,7 +99,7 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
       } else {
         toast.success(`SMS sent to ${referral.patientPhone}`);
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to send reminder');
     } finally {
       setIsSendingSMS(false);
@@ -123,7 +121,7 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
               <p className="text-gray-500">{referral.referralType}</p>
             </div>
             <div className="flex items-center gap-2">
-              {referral.synced ? (
+              {referral.isSynced ? (
                 <Badge variant="outline" className="bg-green-50">
                   <CheckCircle className="mr-1 h-3 w-3" />
                   Synced
