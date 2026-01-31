@@ -3,6 +3,7 @@
 import { Referral, Status } from '@/lib/db/schema';
 import { ReferralCard } from './ReferralCard';
 import { Clock, Calendar, CheckCircle2, XCircle } from 'lucide-react';
+import { useDroppable } from '@dnd-kit/core';
 
 interface KanbanColumnProps {
   title: string;
@@ -44,6 +45,9 @@ const columnConfig: Record<Status, {
 
 export function KanbanColumn({ title, status, referrals }: KanbanColumnProps) {
   const config = columnConfig[status];
+  const { setNodeRef, isOver } = useDroppable({
+    id: status,
+  });
 
   // Sort overdue referrals to top for pending column
   const sortedReferrals = [...referrals].sort((a, b) => {
@@ -71,16 +75,25 @@ export function KanbanColumn({ title, status, referrals }: KanbanColumnProps) {
           </span>
         </div>
       </div>
-      <div className="flex-1 space-y-3 overflow-y-auto rounded-b-xl bg-white/50 p-3 custom-scrollbar border border-t-0 border-gray-100">
+      <div
+        ref={setNodeRef}
+        className={`
+          flex-1 space-y-3 overflow-y-auto rounded-b-xl p-3 custom-scrollbar border border-t-0 border-gray-100
+          transition-colors duration-200
+          ${isOver ? 'bg-blue-50/80 ring-2 ring-blue-400 ring-inset' : 'bg-white/50'}
+        `}
+      >
         {sortedReferrals.map((referral) => (
           <ReferralCard key={referral.id} referral={referral} />
         ))}
         {referrals.length === 0 && (
-          <div className="py-12 text-center">
+          <div className={`py-12 text-center transition-colors ${isOver ? 'bg-blue-100/50 rounded-lg' : ''}`}>
             <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
               {config.icon}
             </div>
-            <p className="text-sm text-muted-foreground">No referrals</p>
+            <p className="text-sm text-muted-foreground">
+              {isOver ? 'Drop here' : 'No referrals'}
+            </p>
           </div>
         )}
       </div>

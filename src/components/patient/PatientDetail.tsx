@@ -38,6 +38,7 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
   const { referrals, updateStatus, updateReferral } = useReferrals();
   const referral = referrals.find((r) => r.id === referralId);
   const [isSendingSMS, setIsSendingSMS] = useState(false);
+  const [appointmentInput, setAppointmentInput] = useState('');
 
   if (!referral) {
     return (
@@ -213,21 +214,34 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
               <QRWallet referral={referral} />
 
               {referral.status === 'scheduled' && !referral.appointmentDate && (
-                <div className="w-full mt-4">
+                <div className="w-full mt-4 space-y-3">
                   <Label htmlFor="appointmentDate">Set Appointment Date & Time</Label>
-                  <Input
-                    id="appointmentDate"
-                    type="datetime-local"
-                    className="mt-1"
-                    onChange={async (e) => {
-                      if (e.target.value) {
-                        await updateReferral(referral.id, {
-                          appointmentDate: new Date(e.target.value).toISOString()
-                        });
-                        toast.success('Appointment scheduled');
-                      }
-                    }}
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      id="appointmentDate"
+                      type="datetime-local"
+                      className="flex-1"
+                      value={appointmentInput}
+                      onChange={(e) => setAppointmentInput(e.target.value)}
+                    />
+                    <Button
+                      onClick={async () => {
+                        if (appointmentInput) {
+                          await updateReferral(referral.id, {
+                            appointmentDate: new Date(appointmentInput).toISOString()
+                          });
+                          toast.success('Appointment confirmed');
+                          setAppointmentInput('');
+                        } else {
+                          toast.error('Please select a date and time');
+                        }
+                      }}
+                      disabled={!appointmentInput}
+                    >
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Confirm
+                    </Button>
+                  </div>
                 </div>
               )}
 

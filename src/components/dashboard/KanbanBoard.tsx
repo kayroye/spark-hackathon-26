@@ -7,6 +7,18 @@ import { Button } from '@/components/ui/button';
 import { Database, Trash2 } from 'lucide-react';
 import { useSeed } from '@/lib/db/use-seed';
 import { toast } from 'sonner';
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCenter,
+} from '@dnd-kit/core';
+import { useState } from 'react';
+import { ReferralCard } from './ReferralCard';
 
 const columns: { title: string; status: Status }[] = [
   { title: 'Pending', status: 'pending' },
@@ -16,8 +28,17 @@ const columns: { title: string; status: Status }[] = [
 ];
 
 export function KanbanBoard() {
-  const { referrals, loading } = useReferrals();
+  const { referrals, loading, updateStatus } = useReferrals();
   const { seed, clear, isSeeding } = useSeed();
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
   const handleSeed = async () => {
     const seeded = await seed();
@@ -32,6 +53,28 @@ export function KanbanBoard() {
     await clear();
     toast.success('Database cleared');
   };
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    setActiveId(null);
+
+    if (!over) return;
+
+    const referralId = active.id as string;
+    const newStatus = over.id as Status;
+
+    const referral = referrals.find((r) => r.id === referralId);
+    if (referral && referral.status !== newStatus) {
+      await updateStatus(referralId, newStatus);
+      toast.success(`Moved to ${newStatus}`);
+    }
+  };
+
+  const activeReferral = activeId ? referrals.find((r) => r.id === activeId) : null;
 
   if (loading) {
     return (
@@ -65,16 +108,31 @@ export function KanbanBoard() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {columns.map((column) => (
-          <KanbanColumn
-            key={column.status}
-            title={column.title}
-            status={column.status}
-            referrals={referrals.filter((r) => r.status === column.status)}
-          />
-        ))}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {columns.map((column) => (
+            <KanbanColumn
+              key={column.status}
+              title={column.title}
+              status={column.status}
+              referrals={referrals.filter((r) => r.status === column.status)}
+            />
+          ))}
+        </div>
+
+        <DragOverlay>
+          {activeReferral ? (
+            <div className="rotate-3 scale-105">
+              <ReferralCard referral={activeReferral} isDragging />
+            </div>
+          ) : null}
+        </DragOverlay>
+      </DndContext>
     </div>
   );
 }
