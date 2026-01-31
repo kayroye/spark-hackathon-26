@@ -40,18 +40,18 @@ export function Sidebar({ isCollapsed, onToggleCollapse, navItems: navItemsProp 
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-40 h-screen bg-slate-900 transition-all duration-300 ease-in-out ${
+      className={`fixed left-0 top-0 z-40 h-screen bg-sidebar-bg transition-all duration-300 ease-in-out ${
         isCollapsed ? 'w-16' : 'w-60'
       }`}
     >
       <div className="flex h-full flex-col">
         {/* Logo Section */}
-        <div className={`flex items-center border-b border-slate-800 dark:border-slate-700/50 px-4 py-4 ${isCollapsed ? 'justify-center' : 'gap-3'}`}>
-          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-teal-400 to-teal-600 flex items-center justify-center shadow-sm shrink-0">
+        <div className={`flex items-center border-b border-sidebar-border px-4 py-4 ${isCollapsed ? 'justify-center' : 'gap-3'}`}>
+          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shadow-sm shrink-0">
             <span className="text-white text-sm font-bold">R</span>
           </div>
           {!isCollapsed && (
-            <span className="text-lg font-bold text-slate-100 whitespace-nowrap">
+            <span className="text-lg font-bold text-sidebar-foreground-active whitespace-nowrap">
               ReferralLoop
             </span>
           )}
@@ -70,8 +70,8 @@ export function Sidebar({ isCollapsed, onToggleCollapse, navItems: navItemsProp 
                     href={item.href}
                     className={`flex items-center rounded-lg px-3 py-2.5 transition-colors duration-200 ${
                       isActive
-                        ? 'bg-teal-500/10 text-teal-500'
-                        : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'
+                        ? 'bg-accent/10 text-accent'
+                        : 'text-sidebar-foreground hover:bg-sidebar-border hover:text-sidebar-foreground-active'
                     } ${isCollapsed ? 'justify-center' : 'gap-3'}`}
                     title={isCollapsed ? item.label : undefined}
                   >
@@ -87,28 +87,28 @@ export function Sidebar({ isCollapsed, onToggleCollapse, navItems: navItemsProp 
         </nav>
 
         {/* User Info */}
-        <div className={`border-t border-slate-800 dark:border-slate-700/50 px-3 py-4 ${isCollapsed ? 'flex justify-center' : ''}`}>
+        <div className={`border-t border-sidebar-border px-3 py-4 ${isCollapsed ? 'flex justify-center' : ''}`}>
           <div
-            className={`flex items-center rounded-lg px-3 py-2.5 text-slate-400 ${
+            className={`flex items-center rounded-lg px-3 py-2.5 text-sidebar-foreground ${
               isCollapsed ? 'justify-center' : 'gap-3'
             }`}
           >
-            <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center shrink-0">
-              <User className="h-4 w-4 text-slate-400" />
+            <div className="w-8 h-8 rounded-full bg-sidebar-border flex items-center justify-center shrink-0">
+              <User className="h-4 w-4 text-sidebar-foreground" />
             </div>
             {!isCollapsed && user && (
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium text-slate-100 truncate">{user.name}</span>
-                <span className="text-xs text-slate-400 truncate">{user.email}</span>
+                <span className="text-sm font-medium text-sidebar-foreground-active truncate">{user.name}</span>
+                <span className="text-xs text-sidebar-foreground truncate">{user.email}</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Theme Toggle */}
-        <div className={`border-t border-slate-800 dark:border-slate-700/50 px-3 py-3 ${isCollapsed ? 'flex justify-center' : ''}`}>
+        <div className={`border-t border-sidebar-border px-3 py-3 ${isCollapsed ? 'flex justify-center' : ''}`}>
           {!isCollapsed && (
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2 px-3">
+            <p className="text-xs font-medium text-sidebar-foreground uppercase tracking-wider mb-2 px-3">
               Theme
             </p>
           )}
@@ -116,10 +116,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse, navItems: navItemsProp 
         </div>
 
         {/* Logout Button */}
-        <div className="border-t border-slate-800 dark:border-slate-700/50 px-3 py-3">
+        <div className="border-t border-sidebar-border px-3 py-3">
           <button
             onClick={handleLogout}
-            className={`flex w-full items-center rounded-lg px-3 py-2.5 text-slate-400 transition-colors duration-200 hover:bg-rose-500/10 hover:text-rose-400 ${
+            className={`flex w-full items-center rounded-lg px-3 py-2.5 text-sidebar-foreground transition-colors duration-200 hover:bg-destructive/10 hover:text-destructive ${
               isCollapsed ? 'justify-center' : 'gap-3'
             }`}
             title={isCollapsed ? 'Log out' : undefined}
@@ -133,10 +133,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse, navItems: navItemsProp 
         </div>
 
         {/* Collapse Toggle Button */}
-        <div className="border-t border-slate-800 dark:border-slate-700/50 px-3 py-3">
+        <div className="border-t border-sidebar-border px-3 py-3">
           <button
             onClick={onToggleCollapse}
-            className={`flex w-full items-center rounded-lg px-3 py-2.5 text-slate-400 transition-colors duration-200 hover:bg-slate-800 hover:text-slate-100 ${
+            className={`flex w-full items-center rounded-lg px-3 py-2.5 text-sidebar-foreground transition-colors duration-200 hover:bg-sidebar-border hover:text-sidebar-foreground-active ${
               isCollapsed ? 'justify-center' : 'gap-3'
             }`}
             title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}

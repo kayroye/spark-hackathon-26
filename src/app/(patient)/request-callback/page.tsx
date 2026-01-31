@@ -20,20 +20,20 @@ export default function RequestCallbackPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-slate-900">Request a Callback</h1>
-        <p className="text-lg text-slate-600">
+        <h1 className="text-3xl font-bold text-foreground">Request a Callback</h1>
+        <p className="text-lg text-muted-foreground">
           Need to speak with someone? Let us know and we will call you back.
         </p>
       </div>
 
       {/* Info Card */}
-      <div className="p-6 bg-teal-50 rounded-xl border border-teal-200 flex items-start gap-4">
-        <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
-          <Phone className="h-6 w-6 text-teal-600" />
+      <div className="p-6 bg-scheduled-muted rounded-xl border border-scheduled-muted flex items-start gap-4">
+        <div className="w-12 h-12 rounded-full bg-scheduled-muted flex items-center justify-center shrink-0">
+          <Phone className="h-6 w-6 text-accent" />
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-teal-800">How it works</h2>
-          <ol className="text-lg text-teal-700 space-y-1 list-decimal list-inside">
+          <h2 className="text-xl font-semibold text-scheduled-foreground">How it works</h2>
+          <ol className="text-lg text-accent space-y-1 list-decimal list-inside">
             <li>Fill out the form below with your question or concern</li>
             <li>Choose your preferred callback time</li>
             <li>We will call you back within 24 hours</li>
@@ -45,9 +45,9 @@ export default function RequestCallbackPage() {
       <CallbackForm onSubmit={handleSubmit} />
 
       {/* Emergency Notice */}
-      <div className="p-6 bg-red-50 rounded-xl border border-red-200">
-        <h3 className="text-xl font-semibold text-red-800 mb-2">Medical Emergency?</h3>
-        <p className="text-lg text-red-700">
+      <div className="p-6 bg-missed-muted rounded-xl border border-missed-muted">
+        <h3 className="text-xl font-semibold text-missed-foreground mb-2">Medical Emergency?</h3>
+        <p className="text-lg text-missed-foreground">
           If you are experiencing a medical emergency, please call{' '}
           <a href="tel:911" className="font-bold underline">
             911

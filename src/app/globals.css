@@ -3,6 +3,33 @@
 @theme {
   --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-merriweather), ui-serif, Georgia, serif;
+
+  /* Status colors for Tailwind classes */
+  --color-pending: hsl(var(--pending));
+  --color-pending-foreground: hsl(var(--pending-foreground));
+  --color-pending-muted: hsl(var(--pending-muted));
+
+  --color-scheduled: hsl(var(--scheduled));
+  --color-scheduled-foreground: hsl(var(--scheduled-foreground));
+  --color-scheduled-muted: hsl(var(--scheduled-muted));
+
+  --color-completed: hsl(var(--completed));
+  --color-completed-foreground: hsl(var(--completed-foreground));
+  --color-completed-muted: hsl(var(--completed-muted));
+
+  --color-missed: hsl(var(--missed));
+  --color-missed-foreground: hsl(var(--missed-foreground));
+  --color-missed-muted: hsl(var(--missed-muted));
+
+  /* Interactive states */
+  --color-interactive: hsl(var(--interactive));
+  --color-interactive-foreground: hsl(var(--interactive-foreground));
+  --color-interactive-muted: hsl(var(--interactive-muted));
+
+  /* Surface variants */
+  --color-surface: hsl(var(--surface));
+  --color-surface-elevated: hsl(var(--surface-elevated));
+  --color-surface-sunken: hsl(var(--surface-sunken));
 }
 
 :root {
@@ -38,6 +65,27 @@
   --critical: 350 89% 52%; /* Rose #e11d48 */
   --alert: 38 92% 50%; /* Amber #f59e0b */
   --surface: 210 40% 98%; /* Cool white #f8fafc */
+
+  /* Status foreground colors (text on status backgrounds) */
+  --pending-foreground: 38 80% 30%;
+  --scheduled-foreground: 168 70% 25%;
+  --completed-foreground: 152 60% 28%;
+  --missed-foreground: 350 75% 40%;
+
+  /* Status muted backgrounds (subtle info boxes, badges) */
+  --pending-muted: 38 80% 95%;
+  --scheduled-muted: 168 60% 95%;
+  --completed-muted: 152 50% 95%;
+  --missed-muted: 350 70% 96%;
+
+  /* Interactive/focus states (sync, drag/drop, focus) */
+  --interactive: 199 89% 48%;
+  --interactive-foreground: 199 80% 30%;
+  --interactive-muted: 199 80% 95%;
+
+  /* Surface hierarchy */
+  --surface-elevated: 0 0% 100%;
+  --surface-sunken: 210 40% 96%;
 
   /* Sidebar colors - Light mode */
   --sidebar-bg: 222 47% 11%; /* Deep slate #0f172a */
@@ -84,6 +132,27 @@
   --critical: 350 80% 58%;
   --alert: 38 92% 55%;
   --surface: 222 47% 8%; /* Match background */
+
+  /* Status foreground colors (text on dark backgrounds) */
+  --pending-foreground: 38 85% 70%;
+  --scheduled-foreground: 168 70% 65%;
+  --completed-foreground: 152 60% 65%;
+  --missed-foreground: 350 75% 70%;
+
+  /* Status muted backgrounds (darker, semi-transparent) */
+  --pending-muted: 38 60% 15%;
+  --scheduled-muted: 168 50% 15%;
+  --completed-muted: 152 45% 15%;
+  --missed-muted: 350 55% 15%;
+
+  /* Interactive states for dark mode */
+  --interactive: 199 85% 55%;
+  --interactive-foreground: 199 80% 75%;
+  --interactive-muted: 199 60% 18%;
+
+  /* Surface hierarchy */
+  --surface-elevated: 222 47% 11%;
+  --surface-sunken: 217 33% 14%;
 
   /* Sidebar colors - Dark mode (slightly elevated from main bg) */
   --sidebar-bg: 222 47% 6%; /* Even deeper #070a12 */

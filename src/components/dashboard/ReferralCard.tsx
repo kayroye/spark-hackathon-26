@@ -32,12 +32,12 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
   } : undefined;
 
   const cardContent = (
-    <Card 
+    <Card
       className={`
         cursor-pointer card-elevated bg-white
-        ${isOverdue ? 'border-red-400 border-2 card-overdue' : 'border-transparent'}
+        ${isOverdue ? 'border-destructive border-2 card-overdue' : 'border-transparent'}
         ${isDragging ? 'opacity-50 shadow-lg' : ''}
-        ${isDraggingOverlay ? 'shadow-2xl border-blue-400 border-2' : ''}
+        ${isDraggingOverlay ? 'shadow-2xl border-interactive border-2' : ''}
       `}
     >
       <CardHeader className="pb-2 pt-4">
@@ -53,18 +53,18 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
               <div
                 {...listeners}
                 {...attributes}
-                className="p-1 rounded hover:bg-gray-100 cursor-grab active:cursor-grabbing touch-none"
+                className="p-1 rounded hover:bg-muted cursor-grab active:cursor-grabbing touch-none"
                 onClick={(e) => e.preventDefault()}
               >
-                <GripVertical className="h-4 w-4 text-gray-400" />
+                <GripVertical className="h-4 w-4 text-muted-foreground" />
               </div>
             )}
             {referral.isSynced ? (
-              <div className="flex items-center gap-1 text-emerald-600">
+              <div className="flex items-center gap-1 text-completed-foreground">
                 <CheckCircle2 className="h-4 w-4" />
               </div>
             ) : (
-              <div className="flex items-center gap-1 text-amber-500 sync-pulse">
+              <div className="flex items-center gap-1 text-pending-foreground sync-pulse">
                 <Clock className="h-4 w-4" />
               </div>
             )}
@@ -89,7 +89,7 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
               {referral.priority}
             </span>
             {isOverdue && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-red-500 text-white font-semibold uppercase tracking-wide">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-destructive text-destructive-foreground font-semibold uppercase tracking-wide">
                 <AlertCircle className="h-3 w-3" />
                 Overdue
               </span>

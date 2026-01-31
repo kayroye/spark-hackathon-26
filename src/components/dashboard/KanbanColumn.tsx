@@ -18,28 +18,28 @@ const columnConfig: Record<Status, {
   countBg: string;
 }> = {
   pending: {
-    borderColor: 'border-t-amber-400',
+    borderColor: 'border-t-pending',
     headerClass: 'column-header-pending',
-    icon: <Clock className="h-4 w-4 text-amber-600" />,
-    countBg: 'bg-amber-100 text-amber-700',
+    icon: <Clock className="h-4 w-4 text-pending-foreground" />,
+    countBg: 'bg-pending-muted text-pending-foreground',
   },
   scheduled: {
-    borderColor: 'border-t-sky-400',
+    borderColor: 'border-t-scheduled',
     headerClass: 'column-header-scheduled',
-    icon: <Calendar className="h-4 w-4 text-sky-600" />,
-    countBg: 'bg-sky-100 text-sky-700',
+    icon: <Calendar className="h-4 w-4 text-scheduled-foreground" />,
+    countBg: 'bg-scheduled-muted text-scheduled-foreground',
   },
   completed: {
-    borderColor: 'border-t-emerald-400',
+    borderColor: 'border-t-completed',
     headerClass: 'column-header-completed',
-    icon: <CheckCircle2 className="h-4 w-4 text-emerald-600" />,
-    countBg: 'bg-emerald-100 text-emerald-700',
+    icon: <CheckCircle2 className="h-4 w-4 text-completed-foreground" />,
+    countBg: 'bg-completed-muted text-completed-foreground',
   },
   missed: {
-    borderColor: 'border-t-red-400',
+    borderColor: 'border-t-missed',
     headerClass: 'column-header-missed',
-    icon: <XCircle className="h-4 w-4 text-red-500" />,
-    countBg: 'bg-red-100 text-red-600',
+    icon: <XCircle className="h-4 w-4 text-missed-foreground" />,
+    countBg: 'bg-missed-muted text-missed-foreground',
   },
 };
 
@@ -76,17 +76,17 @@ export function KanbanColumn({ title, status, referrals }: KanbanColumnProps) {
       <div
         ref={setNodeRef}
         className={`
-          flex-1 space-y-3 overflow-y-auto rounded-b-xl p-3 custom-scrollbar border border-t-0 border-gray-100
+          flex-1 space-y-3 overflow-y-auto rounded-b-xl p-3 custom-scrollbar border border-t-0 border-border
           transition-colors duration-200
-          ${isOver ? 'bg-blue-50/80 ring-2 ring-blue-400 ring-inset' : 'bg-white/50'}
+          ${isOver ? 'bg-interactive-muted ring-2 ring-interactive ring-inset' : 'bg-white/50'}
         `}
       >
         {sortedReferrals.map((referral) => (
           <ReferralCard key={referral.id} referral={referral} />
         ))}
         {referrals.length === 0 && (
-          <div className={`py-12 text-center transition-colors ${isOver ? 'bg-blue-100/50 rounded-lg' : ''}`}>
-            <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
+          <div className={`py-12 text-center transition-colors ${isOver ? 'bg-interactive-muted rounded-lg' : ''}`}>
+            <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-3">
               {config.icon}
             </div>
             <p className="text-sm text-muted-foreground">

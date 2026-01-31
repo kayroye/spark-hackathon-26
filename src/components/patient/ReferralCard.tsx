@@ -19,26 +19,26 @@ const STATUS_CONFIG: Record<Status, { label: string; step: number; color: string
   pending: {
     label: 'Awaiting Scheduling',
     step: 1,
-    color: 'text-amber-700 dark:text-amber-300',
-    bgColor: 'bg-amber-100 dark:bg-amber-900/40',
+    color: 'text-pending-foreground',
+    bgColor: 'bg-pending-muted',
   },
   scheduled: {
     label: 'Appointment Scheduled',
     step: 2,
-    color: 'text-teal-700 dark:text-teal-300',
-    bgColor: 'bg-teal-100 dark:bg-teal-900/40',
+    color: 'text-scheduled-foreground',
+    bgColor: 'bg-scheduled-muted',
   },
   completed: {
     label: 'Completed',
     step: 4,
-    color: 'text-emerald-700 dark:text-emerald-300',
-    bgColor: 'bg-emerald-100 dark:bg-emerald-900/40',
+    color: 'text-completed-foreground',
+    bgColor: 'bg-completed-muted',
   },
   missed: {
     label: 'Missed - Please Contact Us',
     step: 2,
-    color: 'text-red-700 dark:text-red-300',
-    bgColor: 'bg-red-100 dark:bg-red-900/40',
+    color: 'text-missed-foreground',
+    bgColor: 'bg-missed-muted',
   },
 };
 
@@ -76,13 +76,13 @@ export function ReferralCard({
   const nextAction = getNextAction(status, appointmentDate);
 
   return (
-    <Card className="bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-shadow border-slate-200 dark:border-slate-700">
+    <Card className="bg-card shadow-md hover:shadow-lg transition-shadow border-border">
       <CardContent className="p-6 space-y-6">
         {/* Header with Referral Type and Facility */}
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{referralType}</h3>
-          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-            <MapPin className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+          <h3 className="text-xl font-semibold text-foreground">{referralType}</h3>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <MapPin className="h-5 w-5 text-accent" />
             <span className="text-lg">{facility?.name || 'Unknown Facility'}</span>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function ReferralCard({
 
         {/* Progress Indicator */}
         <div className="space-y-3">
-          <p className="text-base font-medium text-slate-700 dark:text-slate-300">
+          <p className="text-base font-medium text-foreground">
             Step {currentStep} of 4: {statusConfig.label}
           </p>
           <div className="flex gap-2">
@@ -103,12 +103,12 @@ export function ReferralCard({
                 key={step}
                 className={cn(
                   'h-3 flex-1 rounded-full transition-colors',
-                  step <= currentStep ? 'bg-teal-500' : 'bg-slate-200 dark:bg-slate-600'
+                  step <= currentStep ? 'bg-accent' : 'bg-muted'
                 )}
               />
             ))}
           </div>
-          <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
+          <div className="flex justify-between text-sm text-muted-foreground">
             <span>Pending</span>
             <span>Scheduled</span>
             <span>Attended</span>
@@ -118,11 +118,11 @@ export function ReferralCard({
 
         {/* Appointment Date (if scheduled) */}
         {appointmentDate && status === 'scheduled' && (
-          <div className="flex items-center gap-3 p-4 bg-teal-50 dark:bg-teal-900/30 rounded-lg border border-teal-200 dark:border-teal-800">
-            <Calendar className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+          <div className="flex items-center gap-3 p-4 bg-scheduled-muted rounded-lg border border-scheduled-muted">
+            <Calendar className="h-6 w-6 text-scheduled-foreground" />
             <div>
-              <p className="text-base font-medium text-teal-800 dark:text-teal-300">Appointment Date</p>
-              <p className="text-lg text-teal-900 dark:text-teal-100">
+              <p className="text-base font-medium text-scheduled-foreground">Appointment Date</p>
+              <p className="text-lg text-foreground">
                 {new Date(appointmentDate).toLocaleDateString('en-US', {
                   weekday: 'long',
                   year: 'numeric',
@@ -135,8 +135,8 @@ export function ReferralCard({
         )}
 
         {/* Next Action */}
-        <div className="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-          <p className="text-base text-slate-700 dark:text-slate-300">{nextAction}</p>
+        <div className="p-4 bg-surface-sunken rounded-lg border border-border">
+          <p className="text-base text-foreground">{nextAction}</p>
         </div>
 
         {/* View Details Button */}
@@ -144,7 +144,7 @@ export function ReferralCard({
           <Button
             onClick={onViewDetails}
             variant="outline"
-            className="w-full h-14 text-lg border-teal-200 dark:border-teal-700 text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/30 hover:border-teal-300 dark:hover:border-teal-600"
+            className="w-full h-14 text-lg border-accent text-accent hover:bg-accent/10 hover:border-accent"
           >
             View Details
             <ChevronRight className="h-5 w-5 ml-2" />

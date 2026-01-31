@@ -69,15 +69,15 @@ export function AppointmentCard({
     : '#';
 
   return (
-    <Card className="bg-white shadow-md hover:shadow-lg transition-shadow border-slate-200">
+    <Card className="bg-card shadow-md hover:shadow-lg transition-shadow border-border">
       <CardContent className="p-6 space-y-6">
         {/* Date and Time - Prominently Displayed */}
-        <div className="text-center p-6 bg-teal-50 rounded-xl border border-teal-200">
-          <div className="flex items-center justify-center gap-2 text-teal-700 mb-2">
+        <div className="text-center p-6 bg-scheduled-muted rounded-xl border border-scheduled-muted">
+          <div className="flex items-center justify-center gap-2 text-scheduled-foreground mb-2">
             <Calendar className="h-6 w-6" />
             <span className="text-xl font-semibold">{formattedDate}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 text-teal-600">
+          <div className="flex items-center justify-center gap-2 text-scheduled-foreground">
             <Clock className="h-5 w-5" />
             <span className="text-2xl font-bold">{formattedTime}</span>
           </div>
@@ -85,17 +85,17 @@ export function AppointmentCard({
 
         {/* Referral Type */}
         <div className="text-center">
-          <h3 className="text-xl font-semibold text-slate-900">{referralType}</h3>
+          <h3 className="text-xl font-semibold text-foreground">{referralType}</h3>
         </div>
 
         {/* Facility Information */}
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
+        <div className="p-4 bg-surface-sunken rounded-lg border border-border space-y-3">
           <div className="flex items-start gap-3">
-            <MapPin className="h-6 w-6 text-teal-600 flex-shrink-0 mt-0.5" />
+            <MapPin className="h-6 w-6 text-accent shrink-0 mt-0.5" />
             <div className="flex-1">
-              <p className="text-lg font-medium text-slate-900">{facility?.name || 'Unknown Facility'}</p>
+              <p className="text-lg font-medium text-foreground">{facility?.name || 'Unknown Facility'}</p>
               {facility?.distance && (
-                <p className="text-base text-slate-600">{facility.distance} away</p>
+                <p className="text-base text-muted-foreground">{facility.distance} away</p>
               )}
             </div>
           </div>
@@ -104,7 +104,7 @@ export function AppointmentCard({
             href={mapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 text-teal-600 hover:text-teal-700 font-medium py-2 px-4 rounded-lg bg-white border border-teal-200 hover:bg-teal-50 transition-colors"
+            className="flex items-center justify-center gap-2 text-accent hover:text-accent/80 font-medium py-2 px-4 rounded-lg bg-card border border-accent hover:bg-accent/10 transition-colors"
           >
             <ExternalLink className="h-5 w-5" />
             <span className="text-base">Open in Maps</span>
@@ -113,9 +113,9 @@ export function AppointmentCard({
 
         {/* Confirmation Status or Actions */}
         {confirmed ? (
-          <div className="flex items-center justify-center gap-3 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
-            <CheckCircle className="h-7 w-7 text-emerald-600" />
-            <span className="text-lg font-medium text-emerald-700">Attendance Confirmed</span>
+          <div className="flex items-center justify-center gap-3 p-4 bg-completed-muted rounded-lg border border-completed-muted">
+            <CheckCircle className="h-7 w-7 text-completed-foreground" />
+            <span className="text-lg font-medium text-completed-foreground">Attendance Confirmed</span>
           </div>
         ) : (
           <div className="space-y-4">
@@ -124,7 +124,7 @@ export function AppointmentCard({
               disabled={isConfirming}
               className={cn(
                 'w-full h-14 text-lg font-semibold',
-                'bg-teal-600 hover:bg-teal-700 text-white',
+                'bg-accent hover:bg-accent/90 text-accent-foreground',
                 'disabled:opacity-50 disabled:cursor-not-allowed'
               )}
             >
@@ -133,7 +133,7 @@ export function AppointmentCard({
 
             <button
               onClick={handleReschedule}
-              className="w-full text-center text-lg text-teal-600 hover:text-teal-700 hover:underline font-medium py-2"
+              className="w-full text-center text-lg text-accent hover:text-accent/80 hover:underline font-medium py-2"
             >
               Request Reschedule
             </button>

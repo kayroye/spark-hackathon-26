@@ -20,17 +20,17 @@ interface PatientDetailProps {
 }
 
 const priorityColors: Record<string, string> = {
-  low: 'bg-gray-100 text-gray-800',
-  medium: 'bg-blue-100 text-blue-800',
-  high: 'bg-orange-100 text-orange-800',
-  critical: 'bg-red-100 text-red-800',
+  low: 'bg-muted text-muted-foreground',
+  medium: 'bg-scheduled-muted text-scheduled-foreground',
+  high: 'bg-pending-muted text-pending-foreground',
+  critical: 'bg-missed-muted text-missed-foreground',
 };
 
 const statusColors: Record<string, string> = {
-  pending: 'bg-amber-100 text-amber-800',
-  scheduled: 'bg-blue-100 text-blue-800',
-  completed: 'bg-green-100 text-green-800',
-  missed: 'bg-red-100 text-red-800',
+  pending: 'bg-pending-muted text-pending-foreground',
+  scheduled: 'bg-scheduled-muted text-scheduled-foreground',
+  completed: 'bg-completed-muted text-completed-foreground',
+  missed: 'bg-missed-muted text-missed-foreground',
 };
 
 export function PatientDetail({ referralId }: PatientDetailProps) {
@@ -43,7 +43,7 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
   if (!referral) {
     return (
       <div className="p-4">
-        <p className="text-gray-500">Referral not found or still loading...</p>
+        <p className="text-muted-foreground">Referral not found or still loading...</p>
         <Button variant="link" onClick={() => router.push('/dashboard')}>
           Back to Dashboard
         </Button>
@@ -118,16 +118,16 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
           <div className="flex items-start justify-between">
             <div>
               <CardTitle className="text-2xl">{referral.patientName}</CardTitle>
-              <p className="text-gray-500">{referral.referralType}</p>
+              <p className="text-muted-foreground">{referral.referralType}</p>
             </div>
             <div className="flex items-center gap-2">
               {referral.isSynced ? (
-                <Badge variant="outline" className="bg-green-50">
+                <Badge variant="outline" className="bg-completed-muted">
                   <CheckCircle className="mr-1 h-3 w-3" />
                   Synced
                 </Badge>
               ) : (
-                <Badge variant="outline" className="bg-amber-50">
+                <Badge variant="outline" className="bg-pending-muted">
                   <Clock className="mr-1 h-3 w-3" />
                   Pending Sync
                 </Badge>
@@ -143,50 +143,50 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
             <Badge className={statusColors[referral.status]}>
               {referral.status}
             </Badge>
-            {isOverdue && <Badge className="bg-red-600 text-white font-semibold">OVERDUE - {daysSinceCreated} days</Badge>}
+            {isOverdue && <Badge className="bg-destructive text-destructive-foreground font-semibold">OVERDUE - {daysSinceCreated} days</Badge>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <h4 className="mb-1 text-sm font-medium text-gray-500">Facility</h4>
+              <h4 className="mb-1 text-sm font-medium text-muted-foreground">Facility</h4>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-gray-400" />
+                <MapPin className="h-4 w-4 text-muted-foreground" />
                 <span>{facility?.name}</span>
                 <Badge variant="secondary">{facility?.distance}</Badge>
               </div>
             </div>
 
             <div>
-              <h4 className="mb-1 text-sm font-medium text-gray-500">Created</h4>
+              <h4 className="mb-1 text-sm font-medium text-muted-foreground">Created</h4>
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-gray-400" />
+                <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span>{createdDate}</span>
               </div>
             </div>
 
             {referral.patientPhone && (
               <div>
-                <h4 className="mb-1 text-sm font-medium text-gray-500">Phone</h4>
+                <h4 className="mb-1 text-sm font-medium text-muted-foreground">Phone</h4>
                 <span>{referral.patientPhone}</span>
               </div>
             )}
 
             {referral.appointmentDate && (
               <div>
-                <h4 className="mb-1 text-sm font-medium text-gray-500">Appointment</h4>
+                <h4 className="mb-1 text-sm font-medium text-muted-foreground">Appointment</h4>
                 <span>{new Date(referral.appointmentDate).toLocaleString()}</span>
               </div>
             )}
           </div>
 
           <div>
-            <h4 className="mb-1 text-sm font-medium text-gray-500">Diagnosis</h4>
+            <h4 className="mb-1 text-sm font-medium text-muted-foreground">Diagnosis</h4>
             <p>{referral.diagnosis}</p>
           </div>
 
           {referral.notes && (
             <div>
-              <h4 className="mb-1 text-sm font-medium text-gray-500">Notes</h4>
+              <h4 className="mb-1 text-sm font-medium text-muted-foreground">Notes</h4>
               <p>{referral.notes}</p>
             </div>
           )}

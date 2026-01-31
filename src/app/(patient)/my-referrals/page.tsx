@@ -15,8 +15,8 @@ export default function MyReferralsPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 animate-spin text-teal-600" />
-        <p className="text-lg text-slate-600 dark:text-slate-400">Loading your referrals...</p>
+        <Loader2 className="h-10 w-10 animate-spin text-accent" />
+        <p className="text-lg text-muted-foreground">Loading your referrals...</p>
       </div>
     );
   }
@@ -25,32 +25,32 @@ export default function MyReferralsPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">My Health Referrals</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400">
+        <h1 className="text-3xl font-bold text-foreground">My Health Referrals</h1>
+        <p className="text-lg text-muted-foreground">
           View and track the status of your healthcare referrals
         </p>
       </div>
 
       {/* Referrals List or Empty State */}
       {patientReferrals.length === 0 ? (
-        <Card className="bg-white dark:bg-slate-800 shadow-md border-slate-200 dark:border-slate-700">
+        <Card className="bg-card shadow-md border-border">
           <CardContent className="p-12 text-center space-y-6">
             <div className="flex justify-center">
-              <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
-                <FileText className="h-12 w-12 text-slate-400" />
+              <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
+                <FileText className="h-12 w-12 text-muted-foreground" />
               </div>
             </div>
 
             <div className="space-y-3 max-w-md mx-auto">
-              <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-200">No Referrals Yet</h2>
-              <p className="text-lg text-slate-600 dark:text-slate-400">
+              <h2 className="text-2xl font-semibold text-foreground">No Referrals Yet</h2>
+              <p className="text-lg text-muted-foreground">
                 You do not have any active referrals at this time. When your healthcare provider
                 creates a referral for you, it will appear here.
               </p>
             </div>
 
-            <div className="p-4 bg-teal-50 dark:bg-teal-900/30 rounded-lg border border-teal-200 dark:border-teal-800 max-w-md mx-auto">
-              <p className="text-base text-teal-700 dark:text-teal-300">
+            <div className="p-4 bg-scheduled-muted rounded-lg border border-scheduled-muted max-w-md mx-auto">
+              <p className="text-base text-scheduled-foreground">
                 If you believe you should have a referral, please contact your healthcare provider
                 or request a callback.
               </p>
@@ -60,9 +60,9 @@ export default function MyReferralsPage() {
       ) : (
         <div className="space-y-6">
           {/* Summary */}
-          <div className="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
-            <p className="text-lg text-slate-700 dark:text-slate-300">
-              You have <span className="font-semibold text-teal-700 dark:text-teal-400">{patientReferrals.length}</span>{' '}
+          <div className="p-4 bg-card rounded-lg border border-border shadow-sm">
+            <p className="text-lg text-foreground">
+              You have <span className="font-semibold text-accent">{patientReferrals.length}</span>{' '}
               active referral{patientReferrals.length !== 1 ? 's' : ''}
             </p>
           </div>

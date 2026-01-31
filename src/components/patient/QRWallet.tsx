@@ -60,10 +60,10 @@ export function QRWallet({ referral }: QRWalletProps) {
           />
           <div className="text-center">
             <p className="font-semibold">{referral.patientName}</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               Scan to view patient health summary
             </p>
-            <p className="mt-2 text-xs text-gray-400">
+            <p className="mt-2 text-xs text-muted-foreground">
               Expires in 24 hours
             </p>
           </div>

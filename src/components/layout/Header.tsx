@@ -38,18 +38,18 @@ export function Header() {
             </h1>
           </div>
           {!isOnline && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-200">
-              <CloudOff className="h-3.5 w-3.5 text-amber-600" />
-              <span className="text-xs font-medium text-amber-700">Offline</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-pending-muted border border-pending-muted">
+              <CloudOff className="h-3.5 w-3.5 text-pending-foreground" />
+              <span className="text-xs font-medium text-pending-foreground">Offline</span>
             </div>
           )}
         </div>
 
         <div className="flex items-center gap-3">
           {unsyncedCount > 0 && (
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50 border border-sky-100">
-              <div className="w-1.5 h-1.5 rounded-full bg-sky-500 sync-pulse" />
-              <span className="text-xs font-medium text-sky-700">
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-interactive-muted border border-interactive-muted">
+              <div className="w-1.5 h-1.5 rounded-full bg-interactive sync-pulse" />
+              <span className="text-xs font-medium text-interactive-foreground">
                 {unsyncedCount} pending
               </span>
             </div>
@@ -62,26 +62,26 @@ export function Header() {
             disabled={!isOnline || unsyncedCount === 0 || isSyncing}
             className={`
               transition-all duration-200
-              ${isSyncing ? 'bg-sky-50 border-sky-200' : ''}
-              ${unsyncedCount > 0 && isOnline ? 'border-sky-300 hover:bg-sky-50 hover:border-sky-400' : ''}
+              ${isSyncing ? 'bg-interactive-muted border-interactive-muted' : ''}
+              ${unsyncedCount > 0 && isOnline ? 'border-interactive hover:bg-interactive-muted hover:border-interactive' : ''}
             `}
           >
-            <RefreshCw className={`mr-1.5 h-3.5 w-3.5 ${isSyncing ? 'animate-spin text-sky-600' : ''}`} />
+            <RefreshCw className={`mr-1.5 h-3.5 w-3.5 ${isSyncing ? 'animate-spin text-interactive-foreground' : ''}`} />
             <span className="text-sm">{isSyncing ? 'Syncing...' : 'Sync'}</span>
           </Button>
 
-          <div className="flex items-center gap-2 pl-2 border-l border-gray-200">
-            <div className={`p-1.5 rounded-full transition-colors ${isOnline ? 'bg-emerald-50' : 'bg-gray-100'}`}>
+          <div className="flex items-center gap-2 pl-2 border-l border-border">
+            <div className={`p-1.5 rounded-full transition-colors ${isOnline ? 'bg-completed-muted' : 'bg-muted'}`}>
               {isOnline ? (
-                <Wifi className="h-4 w-4 text-emerald-500" />
+                <Wifi className="h-4 w-4 text-completed-foreground" />
               ) : (
-                <WifiOff className="h-4 w-4 text-gray-400" />
+                <WifiOff className="h-4 w-4 text-muted-foreground" />
               )}
             </div>
             <Switch
               checked={isOnline}
               onCheckedChange={toggleNetwork}
-              className="data-[state=checked]:bg-emerald-500"
+              className="data-[state=checked]:bg-completed"
             />
           </div>
         </div>

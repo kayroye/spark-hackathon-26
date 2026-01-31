@@ -69,20 +69,20 @@ export default function SettingsPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Settings</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400">Customize your experience</p>
+        <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+        <p className="text-lg text-muted-foreground">Customize your experience</p>
       </div>
 
       {/* Theme Section */}
-      <Card className="bg-white dark:bg-slate-900 shadow-md border-slate-200 dark:border-slate-800">
+      <Card className="bg-card shadow-md border-border">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg bg-linear-to-br from-amber-100 to-indigo-100 dark:from-amber-900/30 dark:to-indigo-900/30 flex items-center justify-center">
               <Palette className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <CardTitle className="text-xl dark:text-slate-100">Appearance</CardTitle>
-              <p className="text-base text-slate-600 dark:text-slate-400">Choose your preferred color theme</p>
+              <CardTitle className="text-xl text-foreground">Appearance</CardTitle>
+              <p className="text-base text-muted-foreground">Choose your preferred color theme</p>
             </div>
           </div>
         </CardHeader>
@@ -93,15 +93,14 @@ export default function SettingsPage() {
               onValueChange={setTheme}
               className="w-full"
             >
-              <TabsList className="w-full grid grid-cols-3 bg-slate-100 dark:bg-slate-800/60 p-1.5 h-14 gap-1">
+              <TabsList className="w-full grid grid-cols-3 bg-muted p-1.5 h-14 gap-1">
                 <TabsTrigger
                   value="light"
                   className={cn(
                     'flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200 h-full',
-                    'data-[state=active]:bg-white data-[state=active]:shadow-md',
-                    'dark:data-[state=active]:bg-slate-700',
+                    'data-[state=active]:bg-card data-[state=active]:shadow-md',
                     'data-[state=active]:text-amber-600 dark:data-[state=active]:text-amber-400',
-                    'text-slate-500 dark:text-slate-400'
+                    'text-muted-foreground'
                   )}
                 >
                   <Sun className="h-5 w-5" />
@@ -111,10 +110,9 @@ export default function SettingsPage() {
                   value="dark"
                   className={cn(
                     'flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200 h-full',
-                    'data-[state=active]:bg-white data-[state=active]:shadow-md',
-                    'dark:data-[state=active]:bg-slate-700',
+                    'data-[state=active]:bg-card data-[state=active]:shadow-md',
                     'data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400',
-                    'text-slate-500 dark:text-slate-400'
+                    'text-muted-foreground'
                   )}
                 >
                   <Moon className="h-5 w-5" />
@@ -124,10 +122,9 @@ export default function SettingsPage() {
                   value="system"
                   className={cn(
                     'flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200 h-full',
-                    'data-[state=active]:bg-white data-[state=active]:shadow-md',
-                    'dark:data-[state=active]:bg-slate-700',
-                    'data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400',
-                    'text-slate-500 dark:text-slate-400'
+                    'data-[state=active]:bg-card data-[state=active]:shadow-md',
+                    'data-[state=active]:text-accent',
+                    'text-muted-foreground'
                   )}
                 >
                   <Monitor className="h-5 w-5" />
@@ -138,14 +135,14 @@ export default function SettingsPage() {
           )}
 
           {/* Theme Preview */}
-          <div className="mt-4 p-4 rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+          <div className="mt-4 p-4 rounded-lg border-2 border-dashed border-border bg-background">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-full bg-linear-to-br from-teal-400 to-teal-600 flex items-center justify-center">
                 <span className="text-white text-xs font-bold">R</span>
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Preview</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-sm font-semibold text-foreground">Preview</p>
+                <p className="text-xs text-muted-foreground">
                   Currently using {resolvedTheme === 'dark' ? 'Northern Night' : 'Northern Professional'} theme
                 </p>
               </div>
@@ -161,15 +158,15 @@ export default function SettingsPage() {
       </Card>
 
       {/* Text Size Section */}
-      <Card className="bg-white dark:bg-slate-900 shadow-md border-slate-200 dark:border-slate-800">
+      <Card className="bg-card shadow-md border-border">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
-              <Type className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+            <div className="w-12 h-12 rounded-lg bg-scheduled-muted flex items-center justify-center">
+              <Type className="h-6 w-6 text-accent" />
             </div>
             <div>
-              <CardTitle className="text-xl dark:text-slate-100">Text Size</CardTitle>
-              <p className="text-base text-slate-600 dark:text-slate-400">Choose a text size that is comfortable for you</p>
+              <CardTitle className="text-xl text-foreground">Text Size</CardTitle>
+              <p className="text-base text-muted-foreground">Choose a text size that is comfortable for you</p>
             </div>
           </div>
         </CardHeader>
@@ -180,17 +177,17 @@ export default function SettingsPage() {
               onClick={() => handleTextSizeChange(option.value)}
               className={cn(
                 'w-full p-4 rounded-lg border-2 text-left transition-all',
-                'hover:border-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/30',
+                'hover:border-accent hover:bg-scheduled-muted',
                 textSize === option.value
-                  ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30'
-                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800'
+                  ? 'border-accent bg-scheduled-muted'
+                  : 'border-border bg-card'
               )}
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p
                     className={cn(
-                      'font-semibold text-slate-900 dark:text-slate-100',
+                      'font-semibold text-foreground',
                       option.value === 'default' && 'text-base',
                       option.value === 'large' && 'text-lg',
                       option.value === 'extra-large' && 'text-xl'
@@ -198,18 +195,18 @@ export default function SettingsPage() {
                   >
                     {option.label}
                   </p>
-                  <p className="text-base text-slate-600 dark:text-slate-400">{option.description}</p>
+                  <p className="text-base text-muted-foreground">{option.description}</p>
                 </div>
                 {textSize === option.value && (
-                  <CheckCircle className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+                  <CheckCircle className="h-6 w-6 text-accent" />
                 )}
               </div>
 
               {/* Preview Text */}
-              <div className="mt-3 p-3 bg-slate-100 dark:bg-slate-700 rounded">
+              <div className="mt-3 p-3 bg-muted rounded">
                 <p
                   className={cn(
-                    'text-slate-700 dark:text-slate-300',
+                    'text-foreground',
                     option.value === 'default' && 'text-base',
                     option.value === 'large' && 'text-lg',
                     option.value === 'extra-large' && 'text-xl'
@@ -224,30 +221,30 @@ export default function SettingsPage() {
       </Card>
 
       {/* Notification Preferences */}
-      <Card className="bg-white dark:bg-slate-900 shadow-md border-slate-200 dark:border-slate-800">
+      <Card className="bg-card shadow-md border-border">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
-              <Bell className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+            <div className="w-12 h-12 rounded-lg bg-scheduled-muted flex items-center justify-center">
+              <Bell className="h-6 w-6 text-accent" />
             </div>
             <div>
-              <CardTitle className="text-xl dark:text-slate-100">Notifications</CardTitle>
-              <p className="text-base text-slate-600 dark:text-slate-400">Manage how we communicate with you</p>
+              <CardTitle className="text-xl text-foreground">Notifications</CardTitle>
+              <p className="text-base text-muted-foreground">Manage how we communicate with you</p>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center justify-between p-4 bg-background rounded-lg border border-border">
             <div className="space-y-1">
-              <p className="text-lg font-medium text-slate-900 dark:text-slate-100">SMS Appointment Reminders</p>
-              <p className="text-base text-slate-600 dark:text-slate-400">
+              <p className="text-lg font-medium text-foreground">SMS Appointment Reminders</p>
+              <p className="text-base text-muted-foreground">
                 Receive text message reminders before your appointments
               </p>
             </div>
             <Switch
               checked={smsReminders}
               onCheckedChange={handleSmsToggle}
-              className="data-[state=checked]:bg-teal-600 dark:data-[state=checked]:bg-teal-500 scale-125"
+              className="data-[state=checked]:bg-accent scale-125"
             />
           </div>
         </CardContent>
@@ -260,8 +257,8 @@ export default function SettingsPage() {
           className={cn(
             'h-14 px-8 text-lg font-semibold transition-all',
             isSaved
-              ? 'bg-emerald-600 hover:bg-emerald-700'
-              : 'bg-teal-600 hover:bg-teal-700'
+              ? 'bg-completed-foreground hover:bg-completed-foreground/90'
+              : 'bg-accent hover:bg-accent/90'
           )}
         >
           {isSaved ? (
@@ -276,12 +273,12 @@ export default function SettingsPage() {
       </div>
 
       {/* Help Section */}
-      <Card className="bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800">
+      <Card className="bg-background border-border">
         <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">Need Help?</h3>
-          <p className="text-base text-slate-600 dark:text-slate-400">
+          <h3 className="text-lg font-semibold text-foreground mb-2">Need Help?</h3>
+          <p className="text-base text-muted-foreground">
             If you need assistance with your account or have any questions, please{' '}
-            <a href="/request-callback" className="text-teal-600 dark:text-teal-400 font-medium hover:underline">
+            <a href="/request-callback" className="text-accent font-medium hover:underline">
               request a callback
             </a>{' '}
             and we will be happy to help.

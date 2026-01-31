@@ -62,8 +62,8 @@ export function OverdueConfirmDialog({
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100">
-              <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pending-muted">
+              <AlertTriangle className="h-5 w-5 text-pending-foreground" />
             </div>
             <DialogTitle className="text-lg font-semibold">
               Moving Overdue Referral
@@ -75,7 +75,7 @@ export function OverdueConfirmDialog({
         </DialogHeader>
 
         <div className="space-y-4 py-2">
-          <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <div className="rounded-lg border border-pending bg-pending-muted p-4">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Patient</span>
@@ -87,7 +87,7 @@ export function OverdueConfirmDialog({
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Days Overdue</span>
-                <span className="font-semibold text-red-600">
+                <span className="font-semibold text-missed-foreground">
                   {daysOverdue} {daysOverdue === 1 ? 'day' : 'days'}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export function OverdueConfirmDialog({
 
           <div className="space-y-2">
             <label htmlFor="status-change-note" className="text-sm font-medium">
-              Status Change Note <span className="text-red-500">*</span>
+              Status Change Note <span className="text-destructive">*</span>
             </label>
             <Textarea
               id="status-change-note"
@@ -112,7 +112,7 @@ export function OverdueConfirmDialog({
             <p className="text-xs text-muted-foreground">
               {note.trim().length}/10 characters minimum
               {!isNoteValid && note.trim().length > 0 && (
-                <span className="text-red-500 ml-2">
+                <span className="text-destructive ml-2">
                   ({10 - note.trim().length} more needed)
                 </span>
               )}
