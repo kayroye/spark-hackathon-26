@@ -144,7 +144,7 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
             <Badge className={statusColors[referral.status]}>
               {referral.status}
             </Badge>
-            {isOverdue && <Badge variant="destructive">OVERDUE - {daysSinceCreated} days</Badge>}
+            {isOverdue && <Badge className="bg-red-600 text-white font-semibold">OVERDUE - {daysSinceCreated} days</Badge>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
