@@ -52,10 +52,34 @@ export const magicLinkTokenSchema: RxJsonSchema<MagicLinkToken> = {
 };
 
 export const FACILITIES = [
-  { id: 'regional-hospital', name: 'Regional Hospital', distance: '110km', types: ['Emergency', 'Surgery', 'Cardiology'] },
-  { id: 'mental-health-center', name: 'Northern Mental Health Center', distance: '85km', types: ['Mental Health', 'Counseling'] },
-  { id: 'specialist-clinic', name: 'Lakeview Specialist Clinic', distance: '95km', types: ['Cardiology', 'Oncology', 'Neurology'] },
-  { id: 'community-health', name: 'Clearwater Nursing Station', distance: 'Local', types: ['Primary Care', 'Follow-up'] },
+  {
+    id: 'regional-hospital',
+    name: 'Regional Hospital',
+    address: '1020 Riverside Dr, Thunder Bay, ON',
+    distance: '110km',
+    types: ['Emergency', 'Surgery', 'Cardiology'],
+  },
+  {
+    id: 'mental-health-center',
+    name: 'Northern Mental Health Center',
+    address: '455 Pinecrest Ave, Dryden, ON',
+    distance: '85km',
+    types: ['Mental Health', 'Counseling'],
+  },
+  {
+    id: 'specialist-clinic',
+    name: 'Lakeview Specialist Clinic',
+    address: '88 Lakeview Blvd, Kenora, ON',
+    distance: '95km',
+    types: ['Cardiology', 'Oncology', 'Neurology'],
+  },
+  {
+    id: 'community-health',
+    name: 'Clearwater Nursing Station',
+    address: '14 Birch St, Clearwater Bay, ON',
+    distance: 'Local',
+    types: ['Primary Care', 'Follow-up'],
+  },
 ] as const;
 
 export type FacilityId = typeof FACILITIES[number]['id'];

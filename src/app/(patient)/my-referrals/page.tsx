@@ -4,8 +4,10 @@ import { useReferrals } from '@/lib/db/hooks';
 import { ReferralCard } from '@/components/patient/ReferralCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { FileText, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function MyReferralsPage() {
+  const router = useRouter();
   const { referrals, loading } = useReferrals();
 
   // In a real app, we would filter referrals by the logged-in patient
@@ -76,10 +78,7 @@ export default function MyReferralsPage() {
                 facilityId={referral.facilityId}
                 status={referral.status}
                 appointmentDate={referral.appointmentDate}
-                onViewDetails={() => {
-                  // TODO: Navigate to referral details page
-                  console.log('View details for', referral.id);
-                }}
+                onViewDetails={() => router.push(`/my-referrals/${referral.id}`)}
               />
             ))}
           </div>

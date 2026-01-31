@@ -63,7 +63,7 @@ export default function PatientLayout({
       <SidebarInset>
         {/* Simplified Patient Header */}
         <header className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger className="md:flex" />
               <Link href="/my-referrals" className="flex items-center gap-3">
@@ -87,11 +87,11 @@ export default function PatientLayout({
         </header>
 
         {/* Main Content with increased padding and larger text */}
-        <main className="max-w-5xl mx-auto p-6 text-lg">{children}</main>
+        <main className="p-6 text-lg">{children}</main>
 
         {/* Simple Patient Navigation */}
         <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shadow-lg md:hidden">
-          <div className="max-w-5xl mx-auto px-6 py-3">
+          <div className="px-6 py-3">
             <div className="flex justify-around items-center">
               <Link
                 href="/my-referrals"

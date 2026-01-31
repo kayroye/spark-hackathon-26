@@ -74,6 +74,7 @@ export function ReferralCard({
   const currentStep = getStatusStep(status);
   const statusConfig = STATUS_CONFIG[status];
   const nextAction = getNextAction(status, appointmentDate);
+  const progressColor = status === 'missed' ? 'bg-destructive' : 'bg-accent';
 
   return (
     <Card className="bg-card shadow-md hover:shadow-lg transition-shadow border-border">
@@ -103,7 +104,7 @@ export function ReferralCard({
                 key={step}
                 className={cn(
                   'h-3 flex-1 rounded-full transition-colors',
-                  step <= currentStep ? 'bg-accent' : 'bg-muted'
+                  step <= currentStep ? progressColor : 'bg-muted'
                 )}
               />
             ))}
