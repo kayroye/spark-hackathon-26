@@ -5,6 +5,11 @@ export async function generateICS(referral: Referral): Promise<string | null> {
   if (!referral.appointmentDate) return null;
 
   const facility = FACILITIES.find((f) => f.id === referral.facilityId);
+  const locationDetails = facility
+    ? [facility.name, facility.address, facility.distance && `${facility.distance} away`]
+        .filter(Boolean)
+        .join(' - ')
+    : '';
   const appointmentDate = new Date(referral.appointmentDate);
 
   const event: EventAttributes = {
@@ -18,7 +23,7 @@ export async function generateICS(referral: Referral): Promise<string | null> {
     duration: { hours: 1 },
     title: `Medical Appointment - ${referral.referralType}`,
     description: `Patient: ${referral.patientName}\nDiagnosis: ${referral.diagnosis}`,
-    location: `${facility?.name} (${facility?.distance})`,
+    location: locationDetails,
     categories: ['Medical', 'Appointment'],
     status: 'CONFIRMED',
     busyStatus: 'BUSY',

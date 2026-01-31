@@ -115,6 +115,7 @@ export default function AppointmentsPage() {
                 referralType={appointment.referralType}
                 facilityId={appointment.facilityId}
                 appointmentDate={appointment.appointmentDate!}
+                referral={appointment}
                 onConfirm={handleConfirm}
                 onRequestReschedule={handleRequestReschedule}
                 isConfirmed={confirmedIds.has(appointment.id)}

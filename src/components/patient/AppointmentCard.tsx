@@ -5,13 +5,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, MapPin, ExternalLink, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { FACILITIES, FacilityId } from '@/lib/db/schema';
+import { FACILITIES, FacilityId, Referral } from '@/lib/db/schema';
+import { AddToCalendarButton } from '@/components/appointments/AddToCalendarButton';
 
 interface AppointmentCardProps {
   id: string;
   referralType: string;
   facilityId: FacilityId;
   appointmentDate: string;
+  referral?: Referral;
   onConfirm?: (id: string) => Promise<void>;
   onRequestReschedule?: (id: string) => void;
   isConfirmed?: boolean;
@@ -22,6 +24,7 @@ export function AppointmentCard({
   referralType,
   facilityId,
   appointmentDate,
+  referral,
   onConfirm,
   onRequestReschedule,
   isConfirmed = false,
@@ -130,6 +133,10 @@ export function AppointmentCard({
             >
               {isConfirming ? 'Confirming...' : 'Confirm Attendance'}
             </Button>
+
+            {referral && (
+              <AddToCalendarButton className="w-full h-12 text-base" referral={referral} />
+            )}
 
             <button
               onClick={handleReschedule}
