@@ -13,7 +13,7 @@ import { generateICS, downloadICS } from '@/lib/ics';
 import { useEffect, useState } from 'react';
 import { useReferrals } from '@/lib/db/hooks';
 import { usePatients } from '@/lib/db/use-patients';
-import { FACILITIES, FacilityId, Priority, Status } from '@/lib/db/schema';
+import { FACILITIES, FacilityId, Priority, ReferralWithMeta, Status } from '@/lib/db/schema';
 import { QRWallet } from './QRWallet';
 import { toast } from 'sonner';
 
@@ -381,6 +381,11 @@ export function PatientDetail({ referralId }: PatientDetailProps) {
                 <Badge className={priorityColors[referral.priority]}>
                   {referral.priority} priority
                 </Badge>
+                {referral.clientConfirmed && (
+                  <Badge className="bg-completed-muted text-completed-foreground font-semibold">
+                    client confirmed
+                  </Badge>
+                )}
                 <Badge className={statusColors[referral.status]}>
                   {referral.status}
                 </Badge>

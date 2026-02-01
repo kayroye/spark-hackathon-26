@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 export default function AppointmentsPage() {
-  const { referrals, loading } = useReferrals();
+  const { referrals, loading, updateReferral } = useReferrals();
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [, setConfirmedAppointment] = useState<string | null>(null);
   const [rescheduleModalOpen, setRescheduleModalOpen] = useState(false);
@@ -33,6 +33,8 @@ export default function AppointmentsPage() {
   const handleConfirm = async (id: string) => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await updateReferral(id, { clientConfirmed: true });
 
     // Mark as confirmed locally
     setConfirmedIds((prev) => new Set(prev).add(id));
@@ -127,7 +129,7 @@ export default function AppointmentsPage() {
                   referral={appointmentWithReschedule}
                   onConfirm={handleConfirm}
                   onRequestReschedule={handleRequestReschedule}
-                  isConfirmed={confirmedIds.has(appointment.id)}
+                  isConfirmed={Boolean(appointment.clientConfirmed) || confirmedIds.has(appointment.id)}
                 />
               );
             })}

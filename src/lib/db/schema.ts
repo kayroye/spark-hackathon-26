@@ -172,6 +172,7 @@ export interface Referral {
   facilityId: FacilityId;
   referralType: string;
   appointmentDate?: string;
+  clientConfirmed?: boolean;
   notes?: string;
   createdAt: string;
   updatedAt: string;
@@ -202,6 +203,7 @@ export const referralSchema: RxJsonSchema<Referral> = {
     facilityId: { type: 'string' },
     referralType: { type: 'string' },
     appointmentDate: { type: 'string' },
+    clientConfirmed: { type: 'boolean' },
     notes: { type: 'string' },
     createdAt: { type: 'string' },
     updatedAt: { type: 'string' },

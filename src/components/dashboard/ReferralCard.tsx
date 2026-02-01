@@ -84,10 +84,16 @@ export function ReferralCard({ referral, isDragging: isDraggingOverlay }: Referr
             <span className="font-medium text-foreground/80 dark:text-foreground/90">{facility?.distance}</span>
           </div>
 
-          <div className="flex items-center gap-2 pt-1">
+          <div className="flex items-center gap-2 pt-1 flex-wrap">
             <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs ${priorityStyles[referral.priority]}`}>
               {referral.priority}
             </span>
+            {referral.clientConfirmed && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-completed-muted text-completed-foreground font-semibold">
+                <CheckCircle2 className="h-3 w-3" />
+                client confirmed
+              </span>
+            )}
             {referral.pendingRequest && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-scheduled-muted text-scheduled-foreground font-semibold">
                 <Bell className="h-3 w-3" />
