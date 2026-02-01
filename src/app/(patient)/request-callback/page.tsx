@@ -20,7 +20,7 @@ export default function RequestCallbackPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">Request a Callback</h1>
+        <h1 className="text-3xl font-bold text-foreground">Request a Callback (*)</h1>
         <p className="text-lg text-muted-foreground">
           Need to speak with someone? Let us know and we will call you back.
         </p>
