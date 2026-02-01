@@ -26,7 +26,7 @@ type CareLinkDatabase = RxDatabase<DatabaseCollections>;
 let dbPromise: Promise<CareLinkDatabase> | null = null;
 let devModePluginPromise: Promise<void> | null = null;
 
-const DB_NAME = 'CareLink';
+const DB_NAME = 'carelink';
 
 async function initDatabase(): Promise<CareLinkDatabase> {
   const isDev = process.env.NODE_ENV !== 'production';
