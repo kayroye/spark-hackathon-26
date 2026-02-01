@@ -255,7 +255,7 @@ export default function SettingsPage() {
         <CardContent>
           <div className="flex items-center justify-between p-4 bg-background rounded-lg border border-border">
             <div className="space-y-1">
-              <p className="text-lg font-medium text-foreground">SMS Appointment Reminders</p>
+              <p className="text-lg font-medium text-foreground">SMS Appointment Reminders (*)</p>
               <p className="text-base text-muted-foreground">
                 Receive text message reminders before your appointments
               </p>

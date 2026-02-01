@@ -33,7 +33,7 @@ export default function NurseSettingsPage() {
           <div className="flex items-center justify-between gap-4 pb-2">
             <div className="flex-1">
               <Label htmlFor="sms-alerts" className="text-sm font-medium text-foreground">
-                SMS alerts
+                SMS alerts (*)
               </Label>
               <p className="text-sm text-muted-foreground/90 mt-1 leading-relaxed">
                 Get text updates for new referrals.
@@ -45,7 +45,7 @@ export default function NurseSettingsPage() {
           <div className="flex items-center justify-between gap-4 pt-2 border-t border-border">
             <div className="flex-1 pt-2">
               <Label htmlFor="email-digests" className="text-sm font-medium text-foreground">
-                Email digests
+                Email digests (*)
               </Label>
               <p className="text-sm text-muted-foreground/90 mt-1 leading-relaxed">
                 Receive a daily summary of pending referrals.

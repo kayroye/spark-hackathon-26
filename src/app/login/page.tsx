@@ -114,21 +114,6 @@ export default function LoginPage() {
             <h2 className="heading-4 text-center text-foreground mb-6">How would you like to sign in?</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Patient Card */}
-              <Button
-                variant="outline"
-                onClick={() => setSelectedRole('patient')}
-                className="group h-auto! flex-col! items-start! justify-start! whitespace-normal! p-6 bg-card rounded-xl border-2 border-border/80 hover:border-accent hover:shadow-lg transition-all duration-200 text-left w-full"
-              >
-                <div className="w-14 h-14 rounded-lg bg-secondary flex items-center justify-center mb-4 group-hover:bg-secondary/80 transition-colors">
-                  <User className="h-7 w-7 text-foreground/70" />
-                </div>
-                <h3 className="heading-5 text-foreground mb-2 whitespace-normal">I&apos;m a Patient</h3>
-                <p className="text-sm text-foreground/70 whitespace-normal w-full">
-                  Access your referrals and appointments with a secure magic link
-                </p>
-              </Button>
-
               {/* Healthcare Provider Card */}
               <Button
                 variant="outline"
@@ -141,6 +126,21 @@ export default function LoginPage() {
                 <h3 className="heading-5 text-foreground mb-2 whitespace-normal">I&apos;m a Healthcare Provider</h3>
                 <p className="text-sm text-foreground/70 whitespace-normal w-full">
                   Manage patient referrals and coordinate care
+                </p>
+              </Button>
+
+              {/* Patient Card */}
+              <Button
+                variant="outline"
+                onClick={() => setSelectedRole('patient')}
+                className="group h-auto! flex-col! items-start! justify-start! whitespace-normal! p-6 bg-card rounded-xl border-2 border-border/80 hover:border-accent hover:shadow-lg transition-all duration-200 text-left w-full"
+              >
+                <div className="w-14 h-14 rounded-lg bg-secondary flex items-center justify-center mb-4 group-hover:bg-secondary/80 transition-colors">
+                  <User className="h-7 w-7 text-foreground/70" />
+                </div>
+                <h3 className="heading-5 text-foreground mb-2 whitespace-normal">I&apos;m a Patient</h3>
+                <p className="text-sm text-foreground/70 whitespace-normal w-full">
+                  Access your referrals and appointments with a secure magic link
                 </p>
               </Button>
             </div>
